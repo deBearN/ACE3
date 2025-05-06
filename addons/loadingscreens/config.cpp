@@ -28,7 +28,7 @@ class RscTitles
 	{
 		class BackgroundNoise: RscPicture
 		{
-			text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Start_Up.jpg";
+			text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Start_Up.jpg";
 		};
 	};
 	class SplashBohemia
@@ -73,7 +73,7 @@ class RscTitles
 		class Picture: RscPicture
 		{
 			idc=1200;
-			text="\z\ace\addons\aux212_loadingscreens\Images\logos\ghost_company_ca.paa";
+			text="\z\ace\addons\loadingscreens\Images\logos\ghost_company_ca.paa";
 			x="SafeZoneX + SafeZoneW / 2 - (30 * 		(0.025 * SafezoneH)) / 2";
 			y="SafeZoneY +	SafeZoneH / 2 - (35 * 		(0.025 * SafezoneH)) / 2";
 			w="30 * 		(0.025 * SafezoneH)";
@@ -98,7 +98,7 @@ class RscTitles
 		class PictureA3Logo: RscPicture
 		{
 			idc=1200;
-			text="\z\ace\addons\aux212_loadingscreens\Images\logos\ghost_company_shields_ca";
+			text="\z\ace\addons\loadingscreens\Images\logos\ghost_company_shields_ca";
 			x="SafeZoneX + SafeZoneW / 1.894 - (25 * 		(0.025 * SafezoneH)) / 2";
 			y="SafeZoneY +	SafeZoneH / 2 - (30 * 		(0.025 * SafezoneH)) / 2";
 			w="22 * 		(0.025 * SafezoneH)";
@@ -133,7 +133,7 @@ class RscDisplayMain: RscStandardDisplay
 		delete SpotlightPrev;
 		class Logo: RscActivePicture
 		{
-			text="\z\ace\addons\aux212_loadingscreens\Images\logos\ghost_company_title_ca.paa";
+			text="\z\ace\addons\loadingscreens\Images\logos\ghost_company_title_ca.paa";
 			tooltip="212th Attack Battalion Members Wiki";
 			x="0.495 - 	5 * 	(pixelW * pixelGrid * 2)";
 			y="safezoneY + (1.5 - 0.5 * 	5) * 	(pixelH * pixelGrid * 2)"; // 1.5
@@ -144,7 +144,7 @@ class RscDisplayMain: RscStandardDisplay
 		};
 		class LogoDiscord: RscActivePicture
 		{
-			text="\z\ace\addons\aux212_loadingscreens\Images\logos\212thDiscord.paa";
+			text="\z\ace\addons\loadingscreens\Images\logos\212thDiscord.paa";
 			tooltip="212th Attack Battalion Discord";
 			x="-.58 - 	5 * 	(pixelW * pixelGrid * 2)";
 			y="safezoneY + (50.5 - 0.5 * 	5) * 	(pixelH * pixelGrid * 2)";
@@ -264,7 +264,7 @@ class RscDisplayMain: RscStandardDisplay
 			y="SafeZoneY";
 			h="SafeZoneH";
 			w="SafeZoneW";
-			text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Main_Menu.jpg";
+			text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Main_Menu.jpg";
 		};
 	};
 	
@@ -285,7 +285,7 @@ class RscDisplayLoading
 					y="SafeZoneY";
 					h="SafeZoneH";
 					w="SafeZoneW";
-					text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser.jpg";
+					text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser.jpg";
 				};
 			};
 		};
@@ -294,7 +294,7 @@ class RscDisplayLoading
 			{
 				class LoadingPic1: LoadingPic
 				{
-					text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser_02.jpg";
+					text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser_02.jpg";
 				};
 			};
 		};
@@ -303,7 +303,7 @@ class RscDisplayLoading
 			{
 				class LoadingPic2: LoadingPic
 				{
-					text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser_03.jpg";
+					text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser_03.jpg";
 				};
 			};
 		};
@@ -325,7 +325,7 @@ class RscDisplayLoadMission: RscStandardDisplay
 			y = "SafeZoneY";
 			h = "SafeZoneH";
 			w = "SafeZoneW";
-			text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Loading_Into_Mission.jpg";
+			text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Loading_Into_Mission.jpg";
 		};
 	};
 };
@@ -341,7 +341,7 @@ class RscDisplayClient: RscStandardDisplay
 			y="SafeZoneY";
 			h="SafeZoneH";
 			w="SafeZoneW";
-			text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Loading_Into_Server.jpg";
+			text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Loading_Into_Server.jpg";
 		};
 	};
 };
@@ -357,7 +357,7 @@ class RscDisplayStart: RscStandardDisplay
 			y = "SafeZoneY";
 			h = "SafeZoneH";
 			w = "SafeZoneW";
-			text="\z\ace\addons\aux212_loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser.jpg";
+			text="\z\ace\addons\loadingscreens\Images\Backgrounds\Picture_Leaving_Server_Browser.jpg";
 		};
 	};
 };
