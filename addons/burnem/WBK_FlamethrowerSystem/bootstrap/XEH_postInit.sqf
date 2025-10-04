@@ -2,9 +2,9 @@ if (!(hasInterface) or (isDedicated)) exitWith {};
 [] spawn
 {
 	waitUntil {!(isNull findDisplay 46) };
-	player execVM "\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
+	player execVM "z\aux212_burnem\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
 	player addEventHandler ["Respawn", {
-		player execVM "\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
+		player execVM "z\aux212_burnem\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
 	}];
 
 (findDisplay 46)

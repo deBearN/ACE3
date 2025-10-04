@@ -1,4 +1,4 @@
-﻿class CfgPatches
+class CfgPatches
 {
 	class WBK_Flame_AditionalAnims
 	{
@@ -101,7 +101,7 @@ class CfgGesturesMale
 		{
 			speed=-4.2;
 			looped=0;
-			file="\WBK_FlameAdditionalAnims\Flame_Hit_1.rtm";
+			file="z\aux212_burnem\WBK_FlameAdditionalAnims\Flame_Hit_1.rtm";
 			mask="handsWeapon";
 			disableWeapons=1;
 			interpolationRestart=2;

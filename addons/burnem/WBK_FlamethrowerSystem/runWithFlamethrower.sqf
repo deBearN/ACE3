@@ -51,7 +51,7 @@ nextOilSnd = "run_flame_1";
 };
 };
 };
-[_unit, nextOilSnd, 25, 3] execVM "\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
+[_unit, nextOilSnd, 25, 3] execVM "z\aux212_burnem\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
 }; 
 sleep 0.31;
 
