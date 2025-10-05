@@ -101,7 +101,7 @@ class CfgGesturesMale
 		{
 			speed=-4.2;
 			looped=0;
-			file="z\aux212_burnem\WBK_FlameAdditionalAnims\Flame_Hit_1.rtm";
+			file="\z\ace\addons\burnem\WBK_FlameAdditionalAnims\Flame_Hit_1.rtm";
 			mask="handsWeapon";
 			disableWeapons=1;
 			interpolationRestart=2;

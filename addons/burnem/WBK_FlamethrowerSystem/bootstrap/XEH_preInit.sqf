@@ -9,9 +9,9 @@ WBK_Flamethrower_Array = [];
 Flame_Death_Particles = {
     if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
     _object = _this;
-    _isBurning = _object getVariable ["Aux212_IsBurning",0,true];
-    if (!(_isBurning) or (isNil "Aux212_IsBurning")) exitWith {
-        _object setVariable ["Aux212_IsBurning",1,true];
+    _isBurning = _object getVariable ["Aux212_IsBurning", false];
+    if !(_isBurning) exitWith {
+        _object setVariable ["Aux212_IsBurning",true,true];
         _smlfirelight = "#lightpoint" createVehicleLocal (getpos _object);
         _smlfirelight attachTo [_object,[0,0,0],"spine3"];
         _smlfirelight setLightAmbient [1, 0.3, 0.1];
@@ -31,7 +31,7 @@ Flame_Death_Particles = {
         deleteVehicle _smlfirelight;
         deleteVehicle _source01;
         deleteVehicle _source02;
-        _object setVariable ["Aux212_IsBurning",0,true];
+        _object setVariable ["Aux212_IsBurning",false,true];
         uiSleep 300;
         deleteVehicle _gar;
     };
@@ -59,7 +59,7 @@ Flame_Death_containerSpecialEH = {
     ) exitWith {
     _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
     _obj setDamage 1;
-    [_obj,[0,"z\aux212_burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, true];
+    [_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, true];
     };
     if (typeOf _obj isKindOf "WBK_DOS_Huge_ORK") exitWith {
     if (_obj getVariable 'ORK_Health' <= 0) exitWith {
@@ -82,12 +82,12 @@ Flame_Death_containerSpecialEH = {
     _obj spawn {sleep 6; _this setVariable ["CanBeStunnedIMS",nil,true];};
     _vv = _obj getVariable "WBK_SynthHP";
     _new_vv = _vv - 100;
-    if (_new_vv <= 0) exitWith {[_obj,[0,"z\aux212_burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; _obj setDamage 1; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+    if (_new_vv <= 0) exitWith {[_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; _obj setDamage 1; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
     _obj setVariable ["WBK_SynthHP",_new_vv,true];
     };
     _vv = _obj getVariable "WBK_SynthHP";
     _new_vv = _vv - 40;
-    if (_new_vv <= 0) exitWith {[_obj,[0,"z\aux212_burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; _obj setDamage 1; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+    if (_new_vv <= 0) exitWith {[_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; _obj setDamage 1; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
     _obj setVariable ["WBK_SynthHP",_new_vv,true];
     };
     };
@@ -106,7 +106,7 @@ Flame_Death_containerSpecialEH = {
     _obj enableAI "MOVE";
     };
     _obj setDamage 1;
-    [_obj,[0,"z\aux212_burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+    [_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
     [_obj,"BurnFace"] remoteExec ["setFace", 0];
     _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
     [_obj,selectRandom
@@ -308,7 +308,7 @@ flameTankExplode = {
     _obj setDamage 1;
     [_obj,"Disable_Gesture"] remoteExec ["playActionNow", _obj];
     [_obj,"BurnFace"] remoteExec ["setFace", 0];
-    [_obj,[0,"z\aux212_burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+    [_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
     switch (backpack _obj) do 
     {
         case "41_Flammenwerfer_Balloons": {_obj remoteExec ["removeBackpack",_obj]; [_obj,"41_Flammenwerfer_Balloons_Burn"] remoteExec ["addBackpack",_obj];};
@@ -342,7 +342,7 @@ flameTankExplode = {
     [_obj, _rndAnim] remoteExec ["switchMove",0];
     [_obj, _rndAnim] remoteExec ["playMove",0];
     };
-    [_obj, selectRandom ["fuelTank_befexp","fuelTank_befexp_1"], 60, 4] execVM "z\aux212_burnem\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
+    [_obj, selectRandom ["fuelTank_befexp","fuelTank_befexp_1"], 60, 4] execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
     [_obj,{
     if (isDedicated) exitWith {};
     _veloMan = _this;
@@ -365,7 +365,7 @@ flameTankExplode = {
     _obj setDamage 1;
     [_obj,"Disable_Gesture"] remoteExec ["playActionNow", _obj];
     [_obj,"BurnFace"] remoteExec ["setFace", 0];
-    [_obj,[0,"z\aux212_burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+    [_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
     switch (backpack _obj) do 
     {
         case "41_Flammenwerfer_Balloons": {_obj remoteExec ["removeBackpack",_obj]; [_obj,"41_Flammenwerfer_Balloons_Burn"] remoteExec ["addBackpack",_obj];};
@@ -398,7 +398,7 @@ Flame_Hit_container = {
     if (_obj == _shooter) exitWith {};
     if (!(animationState _obj == "flamethrower_tankExplodePre_1") and !(animationState _obj == "flamethrower_tankExplodePre_2") and ((((_obj worldToModel (_shooter modelToWorld [0, 0, 0])) select 1) < 0) or (stance _obj == "PRONE")) and (getText (configFile >> "CfgVehicles" >> backpack _obj >> "WBK_BurnEm_FlamethrowerBaloons") != "")) then {
     _rndSound = ["flamethrower_tank_bulletimpact_01","flamethrower_tank_bulletimpact_02","flamethrower_tank_bulletimpact_03","flamethrower_tank_bulletimpact_04","flamethrower_tank_bulletimpact_05"] call BIS_fnc_SelectRandom;
-    [_obj, _rndSound, 80, 3] execVM "z\aux212_burnem\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
+    [_obj, _rndSound, 80, 3] execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
     _currentMag = currentMagazine _shooter;
     _currentMagConf = getText (configfile >> "CfgMagazines" >> _currentMag >> "ammo");
     _value = getNumber (configfile >> "CfgAmmo" >> _currentMagConf >> "hit");
