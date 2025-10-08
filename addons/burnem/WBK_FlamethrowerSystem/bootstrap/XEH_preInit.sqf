@@ -731,114 +731,177 @@ Flame_Death_ReplaceTree_SOG = {
 };
 
 Flame_Death_containerSpecialEH = {
-    _obj = _this;
-    if (!(alive _obj) or !(local _obj)) exitWith {};
-    if (getText (configfile >> 'CfgVehicles' >> typeOf _obj >> 'moves') != 'CfgMovesMaleSdr') exitWith {
-    if (typeOf _obj isKindOf "TIOWSpaceMarine_Base") exitWith {
-    if ((damage _obj) >= 0.9) exitWith {
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    _obj setDamage 1;
-    };
-    _obj setDamage ((damage _obj) + 0.01);
-    };
-    if (
-    (typeOf _obj isKindOf "WBK_SpecialZombie_Corrupted_1") or
-    (typeOf _obj isKindOf "WBK_DOS_Squig_Normal") or
-    (typeOf _obj isKindOf "WBK_Headcrab_Normal") or
-    (typeOf _obj isKindOf "WBK_Bullsquid_1") or
-    (typeOf _obj isKindOf "WBK_HoundEye_1") or
-    (typeOf _obj isKindOf "WBK_Antlion_1") or 
-    (getText (configfile >> "CfgVehicles" >> typeOf _obj >> "editorSubcategory") == "dev_mutants")
-    ) exitWith {
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    _obj setDamage 1;
-    [_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, true];
-    };
-    if (typeOf _obj isKindOf "WBK_DOS_Huge_ORK") exitWith {
-    if (_obj getVariable 'ORK_Health' <= 0) exitWith {
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    _obj removeAllEventHandlers "HandleDamage";
-    _obj setDamage 1;
-    };
-    _health = _obj getVariable "ORK_Health";
-    _health = _health - 4;
-    _obj setVariable ["ORK_Health",_health,true];
-    };
-    if (typeOf _obj isKindOf "WBK_SpecialZombie_Smasher_1") exitWith {
-    if (isNil {_obj getVariable "CanBeStunnedIMS"}) exitWith {
-    [_obj, "Smasher_eat_voice", 120, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
-    [_obj, "WBK_Smasher_HitHard"] remoteExec ["switchMove", 0];
-    [_obj, "WBK_Smasher_HitHard"] remoteExec ["playMoveNow", 0];
-    _obj enableAI "MOVE";
-    _obj enableAI "ANIM";
-    _obj setVariable ["CanBeStunnedIMS",1,true];
-    _obj spawn {sleep 6; _this setVariable ["CanBeStunnedIMS",nil,true];};
-    _vv = _obj getVariable "WBK_SynthHP";
-    _new_vv = _vv - 100;
-    if (_new_vv <= 0) exitWith {[_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; _obj setDamage 1; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
-    _obj setVariable ["WBK_SynthHP",_new_vv,true];
-    };
-    _vv = _obj getVariable "WBK_SynthHP";
-    _new_vv = _vv - 40;
-    if (_new_vv <= 0) exitWith {[_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; _obj setDamage 1; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
-    _obj setVariable ["WBK_SynthHP",_new_vv,true];
-    };
-    };
-    if !(isNil {_obj getVariable "WBK_AI_ISZombie"}) exitWith {
-    if (typeOf _obj isKindOf "Zombie_Special_OPFOR_Leaper_1") exitWith {
-    _vv = _obj getVariable "WBK_SynthHP";
-    _new_vv = _vv - 50;
-    if (_new_vv <= 0) exitWith {
-    _obj removeAllEventHandlers "HitPart";
-    _obj setDamage 1;
-    _rndAnim = selectRandom ["WBK_Leaper_Death_1","WBK_Leaper_Death_2"];
-    [_obj, _rndAnim] remoteExec ["switchMove", 0];
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    };
-    _obj setVariable ["WBK_SynthHP",_new_vv,true];
-    _obj enableAI "MOVE";
-    };
-    _obj setDamage 1;
-    [_obj,[0,"\z\ace\addons\burnem\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
-    [_obj,"BurnFace"] remoteExec ["setFace", 0];
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    [_obj,selectRandom
-    ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"]] remoteExec ["switchMove", 0];
-    if (!(isNil {_obj getVariable "WBK_Zombie_CustomSounds"})) then {
-    _snds = (_obj getVariable "WBK_Zombie_CustomSounds") select 4;
-    [_obj, selectRandom _snds, 100, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
-    }else{
-    [_obj, selectRandom ["plagued_burn_1","plagued_burn_2","plagued_burn_3"], 100, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
-    };
-    };
-    if (typeOf _obj isKindOf "WBK_MeleeOrks_1") exitWith {
-    _obj setDamage 1;
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    [_obj,selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"]] remoteExec ["switchMove", 0];
-    [_obj,"Disable_Gesture"] remoteExec ["playActionNow", _obj];
-    };
-    if !(isNil {_obj getVariable "WBK_HL_CustomArmour"}) exitWith {
-    if ((_obj getVariable "WBK_HL_CustomArmour") <= 0) exitWith {
-    _obj setDamage 1;
-    _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-    [_obj,selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"]] remoteExec ["switchMove", 0];
-    [_obj,"Disable_Gesture"] remoteExec ["playActionNow", _obj];
-    };
-    _obj setVariable ["WBK_HL_CustomArmour",(_obj getVariable "WBK_HL_CustomArmour") - 50,true];
-    [_obj,"Flame_Hit_1"] remoteExec ["playActionNow",_obj];
-    };
-    if (!(isDamageAllowed _obj) and (isNil {_obj getVariable "IMS_ISAI"}) and !(typeOf _obj isKindOf "O_soldier_Melee_Hybrid") and !(typeOf _obj isKindOf "B_soldier_Melee_Hybrid")) exitWith {};
-    if ((stance _obj == "PRONE") or (gestureState _obj == "Flame_Hit_1") or !(isNil {_obj getVariable "WasHittedByFlame"})) exitWith {
-    _obj spawn Flame_Death_container;
-    _obj setVariable ["WasHittedByFlame",nil,true];
-    };
-    _obj setVariable ["WasHittedByFlame",1,true];
-    [_obj,"Flame_Hit_1"] remoteExec ["playActionNow",_obj];
-    if (isPlayer _obj) then {
-    [_obj,{
-    playSound [selectRandom ["hit_by_flame_1","hit_by_flame_2","hit_by_flame_3","hit_by_flame_4"],true];
-    }] remoteExec ["spawn",_obj];
-    };
+	params ["_obj","_killer"];
+	if (!(alive _obj) or !(local _obj)) exitWith {};
+	if (getText (configfile >> 'CfgVehicles' >> typeOf _obj >> 'moves') != 'CfgMovesMaleSdr') exitWith {
+		switch true do {
+			case (typeOf _obj isKindOf "dev_flood_sangheili_o" || typeOf _obj isKindOf "dev_flood_carrier_o"|| typeOf _obj isKindOf "dev_flood_infection_o"): {
+				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+				[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			};
+			case (typeOf _obj isKindOf "OPTRE_FC_Elite_Undersuit" || typeOf _obj isKindOf "OPTRE_Spartan2_Soldier_Base"): {
+				if (isNil {_obj getVariable "WBK_HaloCustomHp"}) exitWith {[_obj, [1, false, _killer]] remoteExec ["setDamage",2]; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+				if ((_obj getVariable "WBK_HaloCustomHp") <= 0) exitWith {
+					[_obj,[selectRandom ["Elite_Death_1","Elite_Death_2","WBK_EliteMainWeap_Death_B"], 0, 0.2, false]] remoteExec ["switchMove",0];
+					[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+					[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+					[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+				};
+				_new_vv = (_obj getVariable "WBK_HaloCustomHp") - 20;
+				_obj setVariable ["WBK_HaloCustomHp",_new_vv,true];
+			};
+			case (typeOf _obj isKindOf "WBK_Grunt_1"): {
+				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			};
+			case (typeOf _obj isKindOf "OPTRE_Jackal_base_F"): {
+				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_4","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7","flamethrower_tankExplodePre_1"], 0, 0.2, false]] remoteExec ["switchMove",0];
+			};
+			case (typeOf _obj isKindOf "TIOWSpaceMarine_Base"): {
+				if ((damage _obj) >= 0.9) exitWith {
+					[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+					[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				};
+				_obj setDamage ((damage _obj) + 0.02);
+			};
+			case (
+				(typeOf _obj isKindOf "WBK_SpecialZombie_Corrupted_1") or
+				(typeOf _obj isKindOf "WBK_DOS_Squig_Normal") or
+				(typeOf _obj isKindOf "WBK_Headcrab_Normal") or
+				(typeOf _obj isKindOf "WBK_Bullsquid_1") or
+				(typeOf _obj isKindOf "WBK_HoundEye_1") or
+				(typeOf _obj isKindOf "WBK_Antlion_1") or 
+				(getText (configfile >> "CfgVehicles" >> typeOf _obj >> "editorSubcategory") == "dev_mutants")
+			) : {
+				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			};
+			case (typeOf _obj isKindOf "WBK_DOS_Huge_ORK"): {
+				if (_obj getVariable 'ORK_Health' <= 0) exitWith {
+					[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+					_obj removeAllEventHandlers "HandleDamage";
+					[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				};
+				_health = _obj getVariable "ORK_Health";
+				_health = _health - 4;
+				_obj setVariable ["ORK_Health",_health,true];
+			};
+			case (typeOf _obj isKindOf "WBK_SpecialZombie_Smasher_1"): {
+				if (isNil {_obj getVariable "CanBeStunnedIMS"}) exitWith {
+					[_obj, "Smasher_eat_voice", 120, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
+					[_obj,["WBK_Smasher_HitHard", 0, 0.2, false]] remoteExec ["switchMove",0];
+					_obj enableAI "MOVE";
+					_obj enableAI "ANIM";
+					_obj setVariable ["CanBeStunnedIMS",1,true];
+					_obj spawn {uiSleep 6; _this setVariable ["CanBeStunnedIMS",nil,true];};
+					_vv = _obj getVariable "WBK_SynthHP";
+					_new_vv = _vv - 100;
+					if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+					_obj setVariable ["WBK_SynthHP",_new_vv,true];
+				};
+				_vv = _obj getVariable "WBK_SynthHP";
+				_new_vv = _vv - 40;
+				if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+				_obj setVariable ["WBK_SynthHP",_new_vv,true];
+			};
+			case (typeOf _obj isKindOf "WBK_HaloHunter_1"): {
+				if (isNil {_obj getVariable "CanBeStunnedIMS"}) exitWith {
+					[_obj, "hunter_arm_melee1", 120, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
+					[_obj,["Hunter_HitHard", 0, 0.2, false]] remoteExec ["switchMove",0];
+					_obj enableAI "MOVE";
+					_obj enableAI "ANIM";
+					_obj setVariable ["CanBeStunnedIMS",1,true];
+					_obj spawn {uiSleep 6; _this setVariable ["CanBeStunnedIMS",nil,true];};
+					_vv = _obj getVariable "WBK_HaloCustomHp";
+					_new_vv = _vv - 100;
+					if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+					_obj setVariable ["WBK_HaloCustomHp",_new_vv,true];
+				};
+				_vv = _obj getVariable "WBK_HaloCustomHp";
+				_new_vv = _vv - 30;
+				if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+				_obj setVariable ["WBK_HaloCustomHp",_new_vv,true];
+			};
+		};
+	};
+	switch true do {
+		case (((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find 'Void-Helm') > -1) and !((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find '(OPEN)') > -1)): {
+			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_4","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7","flamethrower_tankExplodePre_1"], 0, 0.2, false]] remoteExec ["switchMove",0];
+			[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			_deathSnd = "#particlesource" createVehicle position _this;
+			_deathSnd attachTo [_obj,[0,0,0],"head"];
+			[_deathSnd,selectRandom ["SolarAux_death_flamethrower_1","SolarAux_death_flamethrower_2","SolarAux_death_flamethrower_3"],190] call CBA_fnc_GlobalSay3d;
+			_deathSnd spawn {uiSleep 30; deleteVehicle _this};
+			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+		};
+		case (typeOf _obj isKindOf "dev_flood_combat_o"): {
+			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_4","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7","flamethrower_tankExplodePre_1"], 0, 0.2, false]] remoteExec ["switchMove",0];
+			[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+		};
+		case !(isNil {_obj getVariable "WBK_AI_ISZombie"}): {
+			if (typeOf _obj isKindOf "Zombie_Special_OPFOR_Leaper_1") exitWith {
+				_vv = _obj getVariable "WBK_SynthHP";
+				_new_vv = _vv - 50;
+				if (_new_vv <= 0) exitWith {
+				_obj removeAllEventHandlers "HitPart";
+				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+				[_obj,[selectRandom ["WBK_Leaper_Death_1","WBK_Leaper_Death_2"], 0, 0.2, false]] remoteExec ["switchMove",0];
+				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+				};
+				_obj setVariable ["WBK_SynthHP",_new_vv,true];
+				_obj enableAI "MOVE";
+			};
+			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+			[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,"BurnFace"] remoteExec ["setFace", 0];
+			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"], 0, 0.2, false]] remoteExec ["switchMove",0];
+			if (!(isNil {_obj getVariable "WBK_Zombie_CustomSounds"})) then {
+				_snds = (_obj getVariable "WBK_Zombie_CustomSounds") select 4;
+				[_obj, selectRandom _snds, 100, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
+			}else{
+				[_obj, selectRandom ["plagued_burn_1","plagued_burn_2","plagued_burn_3"], 100, 6] execVM "\WebKnight_StarWars_Mechanic\createSoundGlobal.sqf";
+			};
+		};
+		case (typeOf _obj isKindOf "WBK_MeleeOrks_1"): {
+			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"], 0, 0.2, false]] remoteExec ["switchMove",0];
+			[_obj,"Disable_Gesture"] remoteExec ["playActionNow", _obj];
+		};
+		case !(isNil {_obj getVariable "WBK_HL_CustomArmour"}): {
+			if ((_obj getVariable "WBK_HL_CustomArmour") <= 0) exitWith {
+			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
+			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"], 0, 0.2, false]] remoteExec ["switchMove",0];
+			[_obj,"Disable_Gesture"] remoteExec ["playActionNow", _obj];
+			};
+			_obj setVariable ["WBK_HL_CustomArmour",(_obj getVariable "WBK_HL_CustomArmour") - 50,true];
+			[_obj,"Flame_Hit_1"] remoteExec ["playActionNow",_obj];
+		};
+		default {
+			if (!(isDamageAllowed _obj) and (isNil {_obj getVariable "IMS_ISAI"}) and !(typeOf _obj isKindOf "O_soldier_Melee_Hybrid") and !(typeOf _obj isKindOf "B_soldier_Melee_Hybrid")) exitWith {};
+			if ((stance _obj == "PRONE") or (gestureState _obj == "Flame_Hit_1") or !(isNil {_obj getVariable "WasHittedByFlame"})) exitWith {
+				[_obj, _killer] spawn Flame_Death_container;
+				_obj setVariable ["WasHittedByFlame",nil,true];
+			};
+			_obj setVariable ["WasHittedByFlame",1,true];
+			[_obj,"Flame_Hit_1"] remoteExec ["playActionNow",_obj];
+			if (isPlayer _obj) then {
+				[_obj,{
+					playSound [selectRandom ["hit_by_flame_1","hit_by_flame_2","hit_by_flame_3","hit_by_flame_4"],true];
+				}] remoteExec ["spawn",_obj];
+			};
+		};
+	};
 };
 
 
