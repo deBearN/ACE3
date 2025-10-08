@@ -1,4 +1,56 @@
 
+[ 
+    "WBK_BurnEm_TankExplosion", 
+    "SLIDER", 
+    ["Flamethrower tank explosion chance","Flamethrower tank will only explode if it was hit with something above 9mm caliber and if the number will be above the chance value."],
+    ["Burn Em","1) Main settings"],
+     [0, 100, 40, 0],
+    1,
+    {   
+        params ["_value"]; 
+        WBK_BurnEm_FlameExplode_var = _value; 
+    }
+] call CBA_fnc_addSetting;
+
+[ 
+    "WBK_BurnEm_Bushes", 
+    "CHECKBOX", 
+    ["Enable ability to burn bushes?","Flamethrowers and Molotovs will activly burn all bushes in sight."],
+    ["Burn Em","2) Environmental destruction"],
+    true,
+    1,
+    {   
+        params ["_value"]; 
+        WBK_BurnEm_Bushes_var = _value; 
+    }
+] call CBA_fnc_addSetting;
+
+[ 
+    "WBK_BurnEm_Trees", 
+    "CHECKBOX", 
+    ["Enable ability to burn trees? (Require CDLC)","Flamethrowers and Molotovs will set trees on fire if tree is damaged enough."],
+    ["Burn Em","2) Environmental destruction"],
+    false,
+    1,
+    {   
+        params ["_value"]; 
+        WBK_BurnEm_Trees_var = _value; 
+    }
+] call CBA_fnc_addSetting;
+
+[ 
+    "WBK_BurnEm_Trees_Type", 
+    "LIST", 
+    ["What type of burned trees to use?","Select one option depending on what CDLC you have enabled, and what map you are using."],
+    ["Burn Em","2) Environmental destruction"],
+    [["RF", "SOG"], ["Reaction Forces","S.O.G. Prairie Fire"], 0],
+    1,
+    {   
+        params ["_value"]; 
+        WBK_BurnEm_BurnedTreesType = _value;
+    }
+] call CBA_fnc_addSetting;
+
 WBK_Flamethrower_Array = [];
 
 
