@@ -252,6 +252,30 @@ class CfgSounds
     sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath6.ogg", "db+10", 1};
     titles[]={};
 	};
+    class droiddeath1
+    {
+    name = "droiddeath1";
+    sound[] = {"MRC\JLTS\Core_mod_droids\sounds\death\droid\emp_1.wss", "db+10", 1};
+    titles[]={};
+	};
+    class droiddeath2
+    {
+    name = "droiddeath2";
+    sound[] = {"MRC\JLTS\Core_mod_droids\sounds\death\droid\emp_2.wss", "db+10", 1};
+    titles[]={};
+	};
+    class droiddeath3
+    {
+    name = "droiddeath3";
+    sound[] = {"MRC\JLTS\Core_mod_droids\sounds\death\droid\emp_3.wss", "db+10", 1};
+    titles[]={};
+	};
+    class droiddeath4
+    {
+    name = "droiddeath4";
+    sound[] = {"MRC\JLTS\Core_mod_droids\sounds\death\droid\emp_4.wss", "db+10", 1};
+    titles[]={};
+	};
 };
 
 

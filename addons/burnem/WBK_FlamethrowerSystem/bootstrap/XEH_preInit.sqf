@@ -906,15 +906,21 @@ Flame_Death_containerSpecialEH = {
 
 Aux212_isDroid = {
     params ["_obj"];
-    _uniform = tolower uniform _obj;
+    _uniform = tolower uniform _obj; 
     if (_obj isKindOf "ls_droid_base" || _obj isKindOf "Aux501_Units_CIS_B1_Base_Unit") exitWith
     {
         _obj setVariable ["aux212IsDroid", true, true];
     }; 
-    if (_uniform find "droid" > -1 || _uniform find "b1" > -1 || _uniform find "b2" > -1 || _uniform find "bx" > -1 || _uniform find "ts" > -1) exitwith
+    if (_uniform find "droid" > -1 || _uniform find "b1" > -1 || _uniform find "b2" > -1 || _uniform find "bx" > -1 || (_uniform find "ts" > -1 && _uniform find "cis" > -1)) exitwith
     {
         _obj setVariable ["aux212IsDroid", true, true];
     };
+    { 
+        _classname = configName _x;
+        if (_classname find "droid" > -1 || _classname find "b1" > -1 || _classname find "b2" > -1 || _classname find "bx" > -1  || (_classname find "ts" > -1 && _classname find "cis" > -1) || (_classname find "td" > -1 && _classname find "cis" > -1)) then {  
+            _obj setVariable ["aux212IsDroid", true, true];
+        };
+    } forEach ("true" configClasses (configFile >> "CfgVehicles" >> (typeOf _obj) ));   
 };
 
 
@@ -922,7 +928,7 @@ Aux212_isDroid = {
 Flame_Death_container = { 
 	params ["_obj","_killer"];
     _obj remoteExec ["Aux212_isDroid",_obj];
-    _isDroid = _obj getVariable ["Aux212_isDroid", false];
+    _isDroid = _obj getVariable ["aux212IsDroid", false];
 	_obj setVariable ["SFX_R_DisableDyingSounds",1,true];
 	[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
     if !(_isDroid) then
@@ -940,7 +946,6 @@ Flame_Death_container = {
 	[_obj,{
 		removeVest _this;
 		removeGoggles _this;
-		removeHeadgear _this;
 		if (getText (configFile >> "CfgVehicles" >> backpack _this >> "WBK_BurnEm_FlamethrowerBaloons") != "") then {
 			_this spawn flameTankExplode;
 		}else{
@@ -1061,23 +1066,45 @@ Flamethrower_Fired_EH = {
 Flame_Death_Scream = {
     [_this, {
     if (isDedicated) exitWith {};
+    _this remoteExec ["Aux212_isDroid",_this];
+    _isDroid = _this getVariable ["aux212IsDroid", false];
+    _useDefaultSounds = missionNamespace getVariable["JLTS_emp_useDefaultSounds",true];
     _soundCache = "#particlesource" createVehicleLocal position _this;
     _soundCache attachTo [_this,[0,0,0],"head"];
     if ((player distance _this) <= 25) then {
-    _soundCache say3D [
-    selectRandom ["burnttodeath1","burnttodeath2","burnttodeath3","burnttodeath4","burnttodeath5","burnttodeath6"], 
-    300, 
-    1, 
-    false, 
-    0];
+        if (_isDroid) then {
+            _soundCache say3D [
+            selectRandom ["droiddeath1","droiddeath2","droiddeath3","droiddeath4"],
+            300, 
+            1, 
+            false, 
+            0];
+        } else {
+        _soundCache say3D [
+        selectRandom ["burnttodeath1","burnttodeath2","burnttodeath3","burnttodeath4","burnttodeath5","burnttodeath6"], 
+        300, 
+        1, 
+        false, 
+        0];
+        };
     }else{
-    uiSleep (0.1 + random 0.1);
-    _soundCache say3D [
-    selectRandom ["burnttodeath_distant1","burnttodeath_distant2","burnttodeath_distant3","burnttodeath_distant4","burnttodeath_distant5","burnttodeath_distant6"], 
-    600, 
-    1, 
-    false, 
-    0];
+        if (_isDroid) then {
+            private _friedSound = selectRandom getArray(configFile >> "CfgJLTSDeathSounds" >> "DeathDroid" >> "emp");
+            _soundCache say3D [
+            _friedSound, 
+            300, 
+            1, 
+            false, 
+            0];
+        } else {
+            uiSleep (0.1 + random 0.1);
+            _soundCache say3D [
+            selectRandom ["burnttodeath_distant1","burnttodeath_distant2","burnttodeath_distant3","burnttodeath_distant4","burnttodeath_distant5","burnttodeath_distant6"], 
+            600, 
+            1, 
+            false, 
+            0];
+        };
     };
     uiSleep 10;
     deleteVehicle _soundCache;
@@ -1088,7 +1115,7 @@ Flame_Death_Scream = {
 flameTankExplode = {
     _obj = _this;
     _obj remoteExec ["Aux212_isDroid",_obj];
-    _isDroid = _obj getVariable ["Aux212_isDroid", false];
+    _isDroid = _obj getVariable ["aux212IsDroid", false];
     if ((random 100) >= 60) exitWith {
     if (stance _obj == "STAND") then {
         [_obj,["Acts_Shocked_3", 0, 0.2, false]] remoteExec ["switchMove",0];
