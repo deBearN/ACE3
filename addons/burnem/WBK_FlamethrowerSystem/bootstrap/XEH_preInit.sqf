@@ -55,7 +55,28 @@ WBK_Flamethrower_Array = [];
 
 
 
-
+WBK_BurnEm_CreateSound = {
+	params [
+		["_source", objNull],
+		["_sound", ""],
+		["_distance",100],
+		["_volume", 2]
+	];
+	if ((isNull _source) || (_sound == "") || !(alive _source)) exitWith {};
+	[_this,{
+		params [
+			["_source", objNull],
+			["_sound", ""],
+			["_distance",100],
+			["_volume", 2]
+		];
+		switch true do {
+			case (isDedicated): {};
+			case (player == _source): {playSoundUI [_sound, 0.8, 1, true, 0];};
+			default {playSound3D [_sound, _source, false, getPosASL _source, _volume, 1, (_distance) + 15, 0, true];};
+		};
+	}] remoteExec ["call",0];
+};
 
 
 Flame_Death_Particles = {
