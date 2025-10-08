@@ -80,34 +80,116 @@ WBK_BurnEm_CreateSound = {
 
 
 Flame_Death_Particles = {
-    if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
-    _object = _this;
-    _isBurning = _object getVariable ["Aux212_IsBurning", false];
-    if !(_isBurning) exitWith {
-        _object setVariable ["Aux212_IsBurning",true,true];
-        _smlfirelight = "#lightpoint" createVehicleLocal (getpos _object);
-        _smlfirelight attachTo [_object,[0,0,0],"spine3"];
-        _smlfirelight setLightAmbient [1, 0.3, 0.1];
-        _smlfirelight setLightColor [1, 0.3, 0.1];
-        _smlfirelight setLightBrightness 0.41;
-        _source01 = "#particlesource" createVehicleLocal (getPosATL _object);
-        _source01 setParticleClass "AirFireSparks";
-        _source01 attachTo [_object,[0,0,0],"spine3"];
-        _source02 = "#particlesource" createVehicleLocal (getPosATL _object);
-        _source02 setParticleClass "SmallDestructionSmoke";
-        _source02 attachTo [_object,[0,0,0],"spine3"];
-        _source01 say3D ["igned_idle",100];
-        _gar = "Land_Decal_ScorchMark_01_small_F" createVehicleLocal (getpos _object);
-        _gar attachTo [_object,[0,0,0]];
-        detach _gar;
-        uiSleep 20;
-        deleteVehicle _smlfirelight;
-        deleteVehicle _source01;
-        deleteVehicle _source02;
-        _object setVariable ["Aux212_IsBurning",false,true];
-        uiSleep 300;
-        deleteVehicle _gar;
-    };
+	if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
+	params ["_object","_killer"];
+	_isBurning = _object getVariable ["Aux212_IsBurning", false];
+	if !(_isBurning) exitWith {
+		_object setVariable ["Aux212_IsBurning",true,true];
+		_color = _killer call Flame_GetColorFlamethrower;
+		_smlfirelight = "#lightpoint" createVehicleLocal (getpos _object);
+		if (_object isKindOf "MAN") then {
+			_smlfirelight attachTo [_object,[0,0,0],"spine3"];
+		}else{
+			_smlfirelight setPosATL (getPosATL _object);
+		};
+		_smlfirelight setLightDayLight true;
+		_smlfirelight setLightAmbient (_color # 0);
+		_smlfirelight setLightColor (_color # 0);
+		_smlfirelight setLightBrightness 0.41;
+		if (dayTime >= WBK_Flamethrowers_sunrise && dayTime <= WBK_Flamethrowers_sunset) then {
+			_smlfirelight setLightBrightness 4;
+		}else{
+			_smlfirelight setLightBrightness 0.41;
+		};
+		_source01  = "#particlesource" createVehiclelocal getposaTL _object; 
+		_source01 setParticleRandom [0,[0.2,0.2,0],[0.4,0.4,1],1,0,[0,0,0,0.1],1,1];
+		_source01 setDropInterval 0.1;
+		_source01 setParticleCircle [0.2,[0,0,0]];
+		_source01 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],"","Billboard",1,5,[0,0,0.1],[0,0,0.5],13,1.3,1,0,[0.1,0.01],[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],[1],0,0,"","",_source01, 0, false, 0.1, [[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]];
+		if (_object isKindOf "MAN") then {
+			_source01 attachTo [_object,[0,0,0]];
+		}else{
+			_source01 setPosATL (getPosATL _object);
+		};
+		_source01 say3D ["body_igned_idle",70];
+		_source02 = "#particlesource" createVehicleLocal (getPosATL _object);
+		if (_object isKindOf "MAN") then {
+			_source02 attachTo [_object,[0,0,0]];
+		}else{
+			_source02 setPosATL (getPosATL _object);
+		};
+		_source02 setParticleParams [["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1],
+					"",
+					"Billboard",
+					1,
+					5,
+					[0, 0, 0],
+					[0,0,1],
+					15,
+					10,
+					7.9,
+					0.035,
+					[0.2, 1.1, 2.2],
+					[[0.01, 0.01, 0.01, 0.3],[0.01, 0.01, 0.01, 0.05]],
+					[4.5],
+					1,
+					0,
+					"",
+					"",
+					_source02,
+					0,
+					false,
+					-1
+					];
+		_source02 setDropInterval 0.1;
+		_source02 setParticleCircle [0, [0, 0, 0]];
+		_source02 setParticleRandom [0.5,[0.45,0.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+		_source03 = "#particlesource" createVehicleLocal (getPosATL _object);
+		if (_object isKindOf "MAN") then {
+			_source03 attachTo [_object,[0,0,0]];
+		}else{
+			_source03 setPosATL (getPosATL _object);
+		};
+		_source03 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],
+					"",
+					"Billboard",
+					1,
+					2,
+					[0, 0, 0],
+					[0,0,0.5], ////moveVelocity
+					15,///	rotationVelocity
+					10,///weight
+					7.9,///volume
+					1.035,///	rubbing
+					[0.4, 0.7, 1, 0.7, 0.4],
+					[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],
+					[0.08],
+					1,
+					0,
+					"",
+					"",
+					_source03,
+					260,
+					false,
+					0.3,
+					[[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]
+					];
+		_source03 setDropInterval 0.1;
+		_source03 setParticleCircle [0, [0, 0, 0]];
+		_source03 setParticleRandom [0.5,[0.45,0.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+		_source03 setParticleFire [15,0.5,0.1];
+		_gar = "Land_Decal_ScorchMark_01_small_F" createVehicleLocal (getpos _object);
+		_gar setPosATL [getPosATL _object select 0,getPosATL _object select 1,0]; 
+		_grassCutter = "Land_ClutterCutter_medium_F" createVehicleLocal getPosATL _object;
+		_grassCutter setPosATL [getPosATL _object select 0,getPosATL _object select 1,0]; 
+		uiSleep 17;
+		_object setVariable ["Aux212_IsBurning",false,true];
+		_gar say3D ["Bm_body_fireFadeout",70];
+		deleteVehicle _smlfirelight;
+		deleteVehicle _source01;
+		deleteVehicle _source02;
+		deleteVehicle _source03;
+	};
 };
 
 Flame_Death_containerSpecialEH = {
