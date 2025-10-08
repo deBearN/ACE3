@@ -904,7 +904,18 @@ Flame_Death_containerSpecialEH = {
 	};
 };
 
-
+Aux212_isDroid = {
+    params ["_obj"];
+    _uniform = tolower uniform _obj;
+    if (_obj isKindOf "ls_droid_base" || _obj isKindOf "Aux501_Units_CIS_B1_Base_Unit") exitWith
+    {
+        _obj setVariable ["aux212IsDroid", true, true];
+    }; 
+    if (_uniform find "droid" > -1 || _uniform find "b1" > -1 || _uniform find "b2" > -1 || _uniform find "bx" > -1 || _uniform find "ts" > -1) exitwith
+    {
+        _obj setVariable ["aux212IsDroid", true, true];
+    };
+};
 
 
 
