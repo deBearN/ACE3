@@ -192,6 +192,544 @@ Flame_Death_Particles = {
 	};
 };
 
+Flame_Death_Tree_Particles_Pre = {
+	if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
+	params ["_object","_killer"];
+	_color = _killer call Flame_GetColorFlamethrower;
+	_smlfirelight = "#lightpoint" createVehicleLocal (ASLToATL _object);
+	_smlfirelight setPosATL (ASLToATL _object);
+	_smlfirelight setLightDayLight true;
+	_smlfirelight setLightAmbient (_color # 0);
+	_smlfirelight setLightColor (_color # 0);
+	_smlfirelight setLightBrightness 0.41;
+	if (dayTime >= WBK_Flamethrowers_sunrise && dayTime <= WBK_Flamethrowers_sunset) then {
+		_smlfirelight setLightBrightness 1;
+	}else{
+		_smlfirelight setLightBrightness 0.11;
+	};
+	_source01  = "#particlesource" createVehiclelocal ASLToATL _object; 
+	_source01 setParticleRandom [0,[0.2,0.2,0],[0.4,0.4,1],1,0,[0,0,0,0.1],1,1];
+	_source01 setDropInterval 0.1;
+	_source01 setParticleCircle [0.2,[0,0,0]];
+	_source01 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],"","Billboard",1,5,[0,0,0.1],[0,0,0.5],13,1.3,1,0,[0.1,0.01],[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],[1],0,0,"","",_source01, 0, false, 0.1, [[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]];
+	_source01 setPosATL (ASLToATL _object);
+	_source01 say3D ["body_igned_idle",70];
+	_source02 = "#particlesource" createVehicleLocal (ASLToATL _object);
+	_source02 setPosATL (ASLToATL _object);
+	_source02 setParticleParams [["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				5,
+				[0, 0, 0],
+				[0,0,1],
+				15,
+				10,
+				7.9,
+				0.035,
+				[0.2, 1.1, 2.2],
+				[[0.01, 0.01, 0.01, 0.3],[0.01, 0.01, 0.01, 0.05]],
+				[4.5],
+				1,
+				0,
+				"",
+				"",
+				_source02,
+				0,
+				false,
+				-1
+				];
+	_source02 setDropInterval 0.1;
+	_source02 setParticleCircle [0, [0, 0, 0]];
+	_source02 setParticleRandom [0.5,[0.45,0.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	_source03 = "#particlesource" createVehicleLocal (ASLToATL _object);
+	_source03 setPosATL (ASLToATL _object);
+	_source03 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				2,
+				[0, 0, 0],
+				[0,0,0.5], ////moveVelocity
+				15,///	rotationVelocity
+				10,///weight
+				7.9,///volume
+				1.035,///	rubbing
+				[0.4, 0.7, 1, 0.7, 0.4],
+				[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],
+				[0.08],
+				1,
+				0,
+				"",
+				"",
+				_source03,
+				260,
+				false,
+				0.3,
+				[[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]
+				];
+	_source03 setDropInterval 0.1;
+	_source03 setParticleCircle [0, [0, 0, 0]];
+	_source03 setParticleRandom [0.5,[0.45,0.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	_source03 setParticleFire [15,0.5,0.1];
+	uiSleep 3;
+	if (dayTime >= WBK_Flamethrowers_sunrise && dayTime <= WBK_Flamethrowers_sunset) then {
+		_smlfirelight setLightBrightness 2;
+	}else{
+		_smlfirelight setLightBrightness 0.21;
+	};
+	_source02 say3D ["Bm_fireFadeout",100];
+	_source02 say3D ["igned_idle",100];
+	_source02 setParticleParams [["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				5,
+				[0, 0, 0],
+				[0,0,1],
+				15,
+				10,
+				7.9,
+				0.035,
+				[1.2, 2.1, 4.2],
+				[[0.01, 0.01, 0.01, 0.3],[0.01, 0.01, 0.01, 0.05]],
+				[4.5],
+				1,
+				0,
+				"",
+				"",
+				_source02,
+				0,
+				false,
+				-1
+				];
+	_source03 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				2,
+				[0, 0, 0],
+				[0,0,0.5], ////moveVelocity
+				15,///	rotationVelocity
+				10,///weight
+				7.9,///volume
+				1.035,///	rubbing
+				[1.4, 1.7, 2, 1.7, 1.4],
+				[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],
+				[0.08],
+				1,
+				0,
+				"",
+				"",
+				_source03,
+				260,
+				false,
+				0.3,
+				[[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]
+				];
+	_source02 setParticleRandom [3,[1.45,1.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	_source03 setParticleRandom [3,[1.45,1.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	uiSleep 4;
+	if (dayTime >= WBK_Flamethrowers_sunrise && dayTime <= WBK_Flamethrowers_sunset) then {
+		_smlfirelight setLightBrightness 3;
+	}else{
+		_smlfirelight setLightBrightness 0.31;
+	};
+	_source02 say3D ["Bm_fireFadeout",200];
+	_source02 say3D ["igned_idle",200];
+	_source02 setParticleParams [["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				5,
+				[0, 0, 0],
+				[0,0,1],
+				15,
+				10,
+				7.9,
+				0.035,
+				[2.2, 3.1, 5.2],
+				[[0.01, 0.01, 0.01, 0.3],[0.01, 0.01, 0.01, 0.05]],
+				[4.5],
+				1,
+				0,
+				"",
+				"",
+				_source02,
+				0,
+				false,
+				-1
+				];
+	_source03 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				2,
+				[0, 0, 0],
+				[0,0,0.5], ////moveVelocity
+				15,///	rotationVelocity
+				10,///weight
+				7.9,///volume
+				1.035,///	rubbing
+				[2.4, 2.7, 3, 2.7, 2.4],
+				[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],
+				[0.08],
+				1,
+				0,
+				"",
+				"",
+				_source03,
+				260,
+				false,
+				0.3,
+				[[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]
+				];
+	_source02 setParticleRandom [5,[2.45,2.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	_source03 setParticleRandom [5,[2.45,2.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	uiSleep 5;
+	if (dayTime >= WBK_Flamethrowers_sunrise && dayTime <= WBK_Flamethrowers_sunset) then {
+		_smlfirelight setLightBrightness 4;
+	}else{
+		_smlfirelight setLightBrightness 0.41;
+	};
+	_source02 setParticleParams [["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				5,
+				[0, 0, 0],
+				[0,0,1],
+				15,
+				10,
+				7.9,
+				0.035,
+				[4.2, 5.1, 6.2],
+				[[0.01, 0.01, 0.01, 0.3],[0.01, 0.01, 0.01, 0.05]],
+				[4.5],
+				1,
+				0,
+				"",
+				"",
+				_source02,
+				0,
+				false,
+				-1
+				];
+	_source03 setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],
+				"",
+				"Billboard",
+				1,
+				2,
+				[0, 0, 0],
+				[0,0,0.5], ////moveVelocity
+				15,///	rotationVelocity
+				10,///weight
+				7.9,///volume
+				1.035,///	rubbing
+				[3.4, 3.7, 4, 3.7, 3.4],
+				[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],
+				[0.08],
+				1,
+				0,
+				"",
+				"",
+				_source03,
+				260,
+				false,
+				0.3,
+				[[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]
+				];
+	_source02 setParticleRandom [5,[4.45,4.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	_source03 setParticleRandom [5,[4.45,4.45,0.1],[0,0,0],1,0.01,[0,0,0,0.1],0.01,0,10];
+	_source03 say3D [selectRandom ["bm_treeOnFire_1","bm_treeOnFire_2","bm_treeOnFire_3"],600];
+	uiSleep 6;
+	deleteVehicle _smlfirelight;
+	deleteVehicle _source01;
+	deleteVehicle _source02;
+	deleteVehicle _source03;
+};
+
+Flame_Death_Tree_Particles = {
+	if (isDedicated) exitWith {};
+	params ["_object","_killer"];
+	_color = _killer call Flame_GetColorFlamethrower;
+	_globalMdlWrld = [0,0,6];
+	_fireflies  = "#particlesource" createVehiclelocal (_object modelToWorld _globalMdlWrld); 
+	_fireflies setParticleRandom [0,[0.2,0.2,0],[0.4,0.4,0.5],1,0,[0,0,0,0.1],1,1];
+	_fireflies setDropInterval 0.1;
+	_fireflies setParticleCircle [2,[0,0,0]];
+	_fireflies setParticleParams [["\A3\data_f\cl_exp", 1, 0, 1],"","Billboard",1,14,[0,0,0.1],[0,0,0.5],13,1.3,1,0,[0.1],[[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]],[1],0,0,"","",_fireflies, 0, false, 0.1, [[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]];
+	_particleAttach = "Land_Decal_ScorchMark_01_large_F" createVehicleLocal position _object; 
+	_particleAttach setPosATL [getPosATL _object select 0,getPosATL _object select 1,0];
+	_particleAttach setDir (random 360);
+	_grassCutter = "Land_ClutterCutter_large_F" createVehicleLocal getPosATL _object;
+	_grassCutter setPosATL [getPosATL _object select 0,getPosATL _object select 1,0];
+	_fog1 = "#particlesource" createVehicleLocal (_object modelToWorld _globalMdlWrld); 
+	_fog1 setParticleParams [ 
+			["\A3\data_f\cl_exp", 1, 0, 1], "", "Billboard", 1, 1, 
+				[0, 0, 0], [0, 0, 0], 1, 1.21, 1, 0, 
+				[2.3,2.6,2.3,2,1.2], [[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.7],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,1],[(_color # 0) # 0,(_color # 0) # 1,(_color # 0) # 2,0.01]], [1000], 1, 0, "", "", _fireflies, 0, false, -1, [[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.7],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,1],[(_color # 1) # 0,(_color # 1) # 1,(_color # 1) # 2,0.01]]
+			]; 
+	_fog1 setParticleRandom [3, [3, 3, -3], [0, 0, -0.1], 2, 0.15, [0, 0, 0, 0.1], 0, 0]; 
+	_fog1 setParticleCircle [0.001, [0, 0, -0.12]]; 
+	_fog1 setDropInterval 0.01; 
+	_fog2 = "#particlesource" createVehicleLocal (_object modelToWorld _globalMdlWrld); 
+	_fog2 setParticleParams [
+	 ["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1], "", "Billboard", 1, 10,
+				[0, 0, 0], [0, 0, 0], 1, 1.215, 1, 0,
+				[3.3,3.6,3.3,3,2.2], [[0.01, 0.01, 0.01, 0.5],[0.01, 0.01, 0.01, 0.2],[0.01, 0.01, 0.01, 0.1],[0.01, 0.01, 0.01, 0.01]], [1000], 1, 0, "", "", _fireflies, 0, false
+			];
+	_fog2 setParticleRandom [3, [4, 4, -3], [0, 0, -0.1], 2, 0.15, [0, 0, 0, 0.1], 0, 0]; 
+	_fog2 setParticleCircle [0.001, [0, 0, -0.12]]; 
+	_fog2 setDropInterval 0.1; 
+	_smlfirelight = "#lightpoint" createVehicleLocal (_object modelToWorld _globalMdlWrld); 
+	_smlfirelight setLightAmbient (_color # 0);
+	_smlfirelight setLightColor (_color # 0);
+	if (dayTime >= WBK_Flamethrowers_sunrise && dayTime <= WBK_Flamethrowers_sunset) then {
+		_smlfirelight setLightBrightness 6.5;
+	}else{
+		_smlfirelight setLightBrightness 0.81;
+	};
+	_smlfirelight setLightUseFlare true;
+	_smlfirelight setLightDayLight true;
+	_smlfirelight setLightFlareSize 10;
+	_smlfirelight setLightFlareMaxDistance 400; 
+	_smlfirelight say3D ["igned_idle",400];
+	_fog1 setParticleFire [15,2,0.1];
+	uisleep 1;
+	_fog1 say3D ["igned_idle",200];
+	uisleep 17;
+	_fog1 setParticleFire [0,0,0.1];
+	deleteVehicle _smlfirelight;
+	deleteVehicle _fog1;
+	_fireflies setDropInterval 0.3;
+	_fireflies say3D ["Bm_fireFadeout",300];
+	_fireflies say3D ["bm_embers",150];
+	_fog2 setPosATL (getPosATL _object);
+	_fog2 setParticleParams [
+	 ["A3\Data_F\ParticleEffects\Universal\smoke.p3d",1, 0, 1], "", "Billboard", 1, 15,
+				[0, 0, 0], [0,0,1],
+				15,
+				10,
+				7.9,
+				0.035,
+				[2,8], [[0.01, 0.01, 0.01, 0.1],[0.01, 0.01, 0.01, 0.2],[0.01, 0.01, 0.01, 0.05]], [1000], 1, 0, "", "", _fog2, 0, false
+			];
+	_fog2 setParticleRandom [0, [0.5, 0.5, 0], [0, 0, 0], 2, 0.15, [0, 0, 0, 0.1], 0, 0]; 
+	uiSleep 29;
+	deleteVehicle _fog2;
+	deleteVehicle _fireflies;
+};
+
+Flame_Death_ReplaceTree = {
+	switch WBK_BurnEm_BurnedTreesType do {
+		 case "RF": {_this call Flame_Death_ReplaceTree_RF;};
+		 case "SOG": {_this call Flame_Death_ReplaceTree_SOG;};
+		 default {};
+	};
+};
+
+Flame_Death_ReplaceTree_RF = {
+	params ["_tree","_killer","_spawnEffect"];
+	_nameOfTheTree = str ((getModelInfo _tree) # 0);
+	switch true do {
+		case ((_nameOfTheTree find "pinuss1s_f") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_pinuss1s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "pinuss2s_f") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_pinuss2s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "pinuss2s_b_f") > -1 || (_nameOfTheTree find "populusn3s") > -1): { 
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_pinuss2s_b_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "ficusb1s_f") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_ficusb1s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "ficusb2s_f") > -1 || (_nameOfTheTree find "oleae2s") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_oleae2s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "fraxinusav") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_fraxinusav2s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "quercusir") > -1 || (_nameOfTheTree find "pinusp3s_f") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_quercusir2s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		case ((_nameOfTheTree find "poplar") > -1): {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_poplar2f_dead_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+		default {
+			_burnedBush = createSimpleObject ["lxRF\props_rf\Trees\t_BroussonetiaP1s_RF.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+		};
+	};
+	[_tree,true] remoteExecCall ["hideObject",0];
+};
+
+Flame_Death_ReplaceTree_SOG = {
+    params ["_tree","_killer","_spawnEffect"];
+    _nameOfTheTree = str ((getModelInfo _tree) # 0);
+    switch true do {
+		case ((_nameOfTheTree find "rice_plant") > -1): {
+			_particleAttach = "Land_Decal_ScorchMark_01_small_F" createVehicle position _tree; 
+			_particleAttach setPosATL [position _tree select 0,position _tree select 1,0];
+			_particleAttach setDir (random 360);
+			_particleAttach enableSimulationGlobal false;
+			_grassCutter = "Land_ClutterCutter_medium_F" createVehicle position _tree;
+			_grassCutter setPosATL [position _tree select 0,position _tree select 1,0];
+			_grassCutter enableSimulationGlobal false;
+        };
+		case ((_nameOfTheTree find "t_ficus_small_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_medium_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_ficus_medium_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_medium_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "b_cycas_f") > -1 || (_nameOfTheTree find "t_pritchardia_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_cocosnucifera_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,-18];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_cyathea_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_cocosnucifera_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,-7];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_cocosnucifera3s_tall_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_cocosnucifera_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_cocosnucifera2s_small_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_cocosnucifera_02.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "pine_tree_01") > -1 || (_nameOfTheTree find "t_agathis_wide_f") > -1): {
+            _burnedBush = createSimpleObject ["vn\vn_plants_pmc\misc\vn_misc_burnspruce_pmc.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_ficus_big_01") > -1 || (_nameOfTheTree find "t_inocarpus_f") > -1 || (_nameOfTheTree find "t_ficus_big_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_big_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_ficus_big_02") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_big_02.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+		case ((_nameOfTheTree find "t_ficus_big_03") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_big_03.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (getDir _tree);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			};
+        };
+        case ((_nameOfTheTree find "treestump_natural_large_f") > -1 || (_nameOfTheTree find "t_ficus_big_04") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_big_04.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,0];
+		     if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			 };
+        };
+		case ((_nameOfTheTree find "t_palaquium_f") > -1): {
+            _burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_ficus_big_01.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+            _burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,-13.5];
+            if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			 };
+        };
+		default {
+			_burnedBush = createSimpleObject ["\vn\vegetation_f_vietnam_02\burned\vn_embers_t_cocosnucifera_02.p3d", [getPosWorld _tree # 0, getPosWorld _tree # 1,0]];
+			_burnedBush setDir (random 360);
+			_burnedBush setPosATL [getPosATL _burnedBush # 0, getPosATL _burnedBush # 1,-5];
+			if (_spawnEffect) then {
+				[_burnedBush,_killer] remoteExec ["Flame_Death_Tree_Particles",[0,-2] select isDedicated,false];
+			 };
+		};
+    };
+    [_tree,true] remoteExecCall ["hideObject",0];
+};
+
 Flame_Death_containerSpecialEH = {
     _obj = _this;
     if (!(alive _obj) or !(local _obj)) exitWith {};
