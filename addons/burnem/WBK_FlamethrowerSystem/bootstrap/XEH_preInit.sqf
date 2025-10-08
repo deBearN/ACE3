@@ -158,6 +158,10 @@ Flame_Death_container = {
         _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
     };
     _obj setDamage 1;
+    [_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+    [_obj,[1,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+    [_obj,[0,"Burnface\addons\data\face.rvmat"]] remoteExec ["setObjectMaterial", 0, false];
+    [_obj,[1,"Burnface\addons\data\face.rvmat"]] remoteExec ["setObjectMaterial", 0, false];
     if ((stance _obj == "STAND") or !(isNil {_obj getVariable "IMS_ISAI"})) then {
     [_obj,selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7"]] remoteExec ["switchMove", 0];
     }else{
@@ -184,6 +188,8 @@ Flame_Death_container = {
     }] remoteExec ["spawn",_obj];
     _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
     if !(typeOf _obj isKindOf "Naked1") then {
+    [_obj,"BurnFace"] remoteExec ["setFace", 0];
+    _obj spawn Flame_Death_Scream;
     };
 };
 
@@ -230,10 +236,10 @@ Flamethrower_Fired_EH = {
     _firstObj remoteExec ["Flame_Death_containerSpecialEH",_firstObj];
     };
     if (_firstObj isKindOf "CAR") exitWith {
-    _firstObj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+    [_firstObj,((damage _firstObj) + 0.01)] remoteExec ["setDamage",_firstObj];
     };
     if (_firstObj isKindOf "StaticWeapon") exitWith {
-    _firstObj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+    [_firstObj,((damage _firstObj) + 0.01)] remoteExec ["setDamage",_firstObj];
     };
     };
     };
