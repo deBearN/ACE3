@@ -62,6 +62,38 @@ if (isServer) then {
 };
 
 if (!hasInterface) exitWith {};
+["ace_explosives_place", 
+{
+	params ["_explosive", "_dir", "_pitch", "_unit"];
+	if (_explosive isKindOf "HX_AT_Mine_Ammo") then{
+        _object = attachedTo _explosive;
+        if (isNull _object) then {
+            _startPosASL = getPosASL _explosive vectorAdd (vectorup _explosive vectorMultiply 0.1);
+            _cameraDir =vectorUp _explosive vectorMultiply -1;
+            _endPosASL = _startPosASL vectorAdd (_cameraDir vectorMultiply 2.5);
+            _intersections = lineIntersectsSurfaces [_startPosASL, _endPosASL, _explosive, objNull, true, 1, "GEOM", "FIRE"];
+            (_intersections select 0) params ["_touchingPoint", "_surfaceNormal", "", "_object"];
+            if (_surfaceNormal vectorDotProduct  (_endPosASL vectorDiff _startPosASL) > 0) then {
+                _surfaceNormal = _surfaceNormal vectorMultiply -1;
+            };
+            private _v1 = vectorNormalized (_surfaceNormal vectorMultiply -1);
+            private _v2 = [];
+            private _v3 = [];
+            private _vectorDirAndUp = if (abs (_v1 select 2) < 0.94) then {
+                _v3 = _v1 vectorCrossProduct [0, 0, 1];
+                _v2 = _v3 vectorCrossProduct _v1;
+                [_v1, _v2]
+            } else {
+                _v2 = vectorNormalized (_v1 vectorCrossProduct (_endPosASL vectorDiff _startPosASL));
+                _v3 = _v1 vectorCrossProduct [0, 0, 1];
+                [_v1, [1,0,0]];
+            };
+            private _posTag = (getPosASL _explosive) vectorAdd (_v1 vectorMultiply -0.01);  
+            [_touchingPoint vectorAdd (_surfaceNormal vectorMultiply 0.01), _vectorDirAndUp, "z\ace\addons\tagging\UI\tags\red\circle.paa"] call ace_tagging_fnc_createTag;
+        };
+    };
+
+}] call CBA_fnc_addEventHandler;
 
 #include "initKeybinds.inc.sqf"
 
