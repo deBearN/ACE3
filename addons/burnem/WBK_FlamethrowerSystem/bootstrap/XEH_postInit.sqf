@@ -1,10 +1,11 @@
+#include "..\..\script_component.hpp"
 if (!(hasInterface) or (isDedicated)) exitWith {};
 [] spawn
 {
 	waitUntil {!(isNull findDisplay 46) };
-	player execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
+	player execVM QPATHTOF(WBK_FlamethrowerSystem\runWithFlamethrower.sqf);
 	player addEventHandler ["Respawn", {
-		player execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
+		player execVM QPATHTOF(WBK_FlamethrowerSystem\runWithFlamethrower.sqf);
 	}];
 
 (findDisplay 46)

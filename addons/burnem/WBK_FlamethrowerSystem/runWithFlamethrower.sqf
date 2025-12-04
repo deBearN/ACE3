@@ -1,3 +1,4 @@
+#include "..\script_component.hpp"
 _unit = _this;
 nextOilSnd = "run_flame_1";
 while {alive _unit} do {
@@ -51,7 +52,7 @@ nextOilSnd = "run_flame_1";
 };
 };
 };
-[_unit, nextOilSnd, 25, 3] execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\createSoundGlobal.sqf";
+[_unit, nextOilSnd, 25, 3] execVM QPATHTOF(WBK_FlamethrowerSystem\createSoundGlobal.sqf);
 }; 
 sleep 0.31;
 

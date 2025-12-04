@@ -1,4 +1,5 @@
 
+#include "..\..\script_component.hpp"
 [ 
     "WBK_BurnEm_TankExplosion", 
     "SLIDER", 
@@ -738,7 +739,7 @@ Flame_Death_containerSpecialEH = {
 			case (typeOf _obj isKindOf "dev_flood_sangheili_o" || typeOf _obj isKindOf "dev_flood_carrier_o"|| typeOf _obj isKindOf "dev_flood_infection_o"): {
 				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
 				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-				[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 			};
 			case (typeOf _obj isKindOf "OPTRE_FC_Elite_Undersuit" || typeOf _obj isKindOf "OPTRE_Spartan2_Soldier_Base"): {
 				if (isNil {_obj getVariable "WBK_HaloCustomHp"}) exitWith {[_obj, [1, false, _killer]] remoteExec ["setDamage",2]; _obj remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
@@ -746,7 +747,7 @@ Flame_Death_containerSpecialEH = {
 					[_obj,[selectRandom ["Elite_Death_1","Elite_Death_2","WBK_EliteMainWeap_Death_B"], 0, 0.2, false]] remoteExec ["switchMove",0];
 					[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 					[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
-					[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+				[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 				};
 				_new_vv = (_obj getVariable "WBK_HaloCustomHp") - 20;
 				_obj setVariable ["WBK_HaloCustomHp",_new_vv,true];
@@ -754,7 +755,7 @@ Flame_Death_containerSpecialEH = {
 			case (typeOf _obj isKindOf "WBK_Grunt_1"): {
 				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
-				[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 			};
 			case (typeOf _obj isKindOf "OPTRE_Jackal_base_F"): {
 				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
@@ -779,7 +780,7 @@ Flame_Death_containerSpecialEH = {
 			) : {
 				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 				[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
-				[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 			};
 			case (typeOf _obj isKindOf "WBK_DOS_Huge_ORK"): {
 				if (_obj getVariable 'ORK_Health' <= 0) exitWith {
@@ -801,12 +802,12 @@ Flame_Death_containerSpecialEH = {
 					_obj spawn {uiSleep 6; _this setVariable ["CanBeStunnedIMS",nil,true];};
 					_vv = _obj getVariable "WBK_SynthHP";
 					_new_vv = _vv - 100;
-					if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+				if (_new_vv <= 0) exitWith {[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
 					_obj setVariable ["WBK_SynthHP",_new_vv,true];
 				};
 				_vv = _obj getVariable "WBK_SynthHP";
 				_new_vv = _vv - 40;
-				if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+			if (_new_vv <= 0) exitWith {[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
 				_obj setVariable ["WBK_SynthHP",_new_vv,true];
 			};
 			case (typeOf _obj isKindOf "WBK_HaloHunter_1"): {
@@ -819,12 +820,12 @@ Flame_Death_containerSpecialEH = {
 					_obj spawn {uiSleep 6; _this setVariable ["CanBeStunnedIMS",nil,true];};
 					_vv = _obj getVariable "WBK_HaloCustomHp";
 					_new_vv = _vv - 100;
-					if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+				if (_new_vv <= 0) exitWith {[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
 					_obj setVariable ["WBK_HaloCustomHp",_new_vv,true];
 				};
 				_vv = _obj getVariable "WBK_HaloCustomHp";
 				_new_vv = _vv - 30;
-				if (_new_vv <= 0) exitWith {[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
+			if (_new_vv <= 0) exitWith {[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false]; _obj removeAllEventHandlers "HitPart"; [_obj, [1, false, _killer]] remoteExec ["setDamage",2]; [_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
 				_obj setVariable ["WBK_HaloCustomHp",_new_vv,true];
 			};
 		};
@@ -833,7 +834,7 @@ Flame_Death_containerSpecialEH = {
 		case (((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find 'Void-Helm') > -1) and !((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find '(OPEN)') > -1)): {
 			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_4","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7","flamethrower_tankExplodePre_1"], 0, 0.2, false]] remoteExec ["switchMove",0];
-			[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 			_deathSnd = "#particlesource" createVehicle position _this;
 			_deathSnd attachTo [_obj,[0,0,0],"head"];
 			[_deathSnd,selectRandom ["SolarAux_death_flamethrower_1","SolarAux_death_flamethrower_2","SolarAux_death_flamethrower_3"],190] call CBA_fnc_GlobalSay3d;
@@ -844,7 +845,7 @@ Flame_Death_containerSpecialEH = {
 			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
 			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_4","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7","flamethrower_tankExplodePre_1"], 0, 0.2, false]] remoteExec ["switchMove",0];
-			[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 		};
 		case !(isNil {_obj getVariable "WBK_AI_ISZombie"}): {
 			if (typeOf _obj isKindOf "Zombie_Special_OPFOR_Leaper_1") exitWith {
@@ -860,7 +861,7 @@ Flame_Death_containerSpecialEH = {
 				_obj enableAI "MOVE";
 			};
 			[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
-			[_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+			[_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
 			[_obj,"BurnFace"] remoteExec ["setFace", 0];
 			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3"], 0, 0.2, false]] remoteExec ["switchMove",0];
@@ -933,10 +934,10 @@ Flame_Death_container = {
 	[_obj, [1, false, _killer]] remoteExec ["setDamage",2];
     if !(_isDroid) then
 	{
-        [_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
-        [_obj,[1,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
-        [_obj,[0,"Burnface\addons\data\face.rvmat"]] remoteExec ["setObjectMaterial", 0, false];
-        [_obj,[1,"Burnface\addons\data\face.rvmat"]] remoteExec ["setObjectMaterial", 0, false];
+        [_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
+        [_obj,[1,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
+        [_obj,[0,QPATHTOF(Burnface\data\faceh.rvmat)]] remoteExec ["setObjectMaterial", 0, false];
+        [_obj,[1,QPATHTOF(Burnface\data\faceh.rvmat)]] remoteExec ["setObjectMaterial", 0, false];
     };
 	switch true do {
 		case (stance _obj == "CROUCH"): {[_obj,["flamethrower_burning_4", 0, 0.2, false]] remoteExec ["switchMove",0];};
@@ -1156,7 +1157,7 @@ flameTankExplode = {
     if !(_isDroid) then
 	{
         [_obj,"BurnFace"] remoteExec ["setFace", 0];
-        [_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+        [_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
     };
     switch (backpack _obj) do 
     {
@@ -1219,7 +1220,7 @@ flameTankExplode = {
     if !(_isDroid) then
 	{
         [_obj,"BurnFace"] remoteExec ["setFace", 0];
-        [_obj,[0,"\WBK_FlamethrowerSystem\burnedFleshCO.paa"]] remoteExec ["setObjectTexture", 0, false];
+        [_obj,[0,QPATHTOF(WBK_FlamethrowerSystem\burnedFleshCO.paa)]] remoteExec ["setObjectTexture", 0, false];
     };
     switch (backpack _obj) do 
     {
@@ -1252,7 +1253,7 @@ Flame_Hit_container = {
 	_shooter = _this select 1;
 	if (_obj == _shooter) exitWith {};
 	if (!(animationState _obj == "flamethrower_tankExplodePre_1") and !(animationState _obj == "flamethrower_tankExplodePre_2") and ((((_obj worldToModel (_shooter modelToWorld [0, 0, 0])) select 1) < 0) or (stance _obj == "PRONE")) and (getText (configFile >> "CfgVehicles" >> backpack _obj >> "WBK_BurnEm_FlamethrowerBaloons") != "")) then {
-		[_obj,selectRandom ["WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_01.wav","WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_02.wav","WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_03.wav","WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_04.wav","WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_05.wav"],80] call WBK_BurnEm_CreateSound;
+		[_obj,selectRandom [QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_01.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_02.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_03.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_04.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_05.wav)],80] call WBK_BurnEm_CreateSound;
 		_currentMag = currentMagazine _shooter;
 		_currentMagConf = getText (configfile >> "CfgMagazines" >> _currentMag >> "ammo");
 		_value = getNumber (configfile >> "CfgAmmo" >> _currentMagConf >> "hit");
