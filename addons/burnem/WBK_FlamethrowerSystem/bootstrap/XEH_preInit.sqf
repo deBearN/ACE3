@@ -831,6 +831,23 @@ Flame_Death_containerSpecialEH = {
 		};
 	};
 	switch true do {
+		case (typeof _obj isKindOf "WBK_B2_Mod_Standart" || typeof _obj isKindOf "WBK_B1_standart" || typeof _obj isKindOf "WBK_B1_heavy" || typeof _obj isKindOf "WBK_B1_SquadLead" || typeof _obj isKindOf "WBK_B1_Shotgun"):
+		{
+				if (_obj getVariable 'droid_health' <= 0) exitWith {
+				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+				_obj removeAllEventHandlers "HandleDamage";
+				_obj setDamage 1; 
+			};
+			_health = _obj getVariable "droid_health";
+			_health = _health - 2;
+			_obj setVariable ["droid_health",_health,true];
+		};
+		case (typeof _obj isKindOf "WBK_BX_Assasin_1"):
+		{
+			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+			_obj removeAllEventHandlers "HandleDamage";
+			_obj setDamage 1; 
+		};
 		case (((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find 'Void-Helm') > -1) and !((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find '(OPEN)') > -1)): {
 			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 			[_obj,[selectRandom ["flamethrower_burning_1","flamethrower_burning_2","flamethrower_burning_3","flamethrower_burning_4","flamethrower_burning_5","flamethrower_burning_6","flamethrower_burning_7","flamethrower_tankExplodePre_1"], 0, 0.2, false]] remoteExec ["switchMove",0];
