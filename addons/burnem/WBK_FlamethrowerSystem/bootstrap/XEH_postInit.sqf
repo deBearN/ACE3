@@ -1,10 +1,11 @@
+#include "..\..\script_component.hpp"
 if (!(hasInterface) or (isDedicated)) exitWith {};
 [] spawn
 {
 	waitUntil {!(isNull findDisplay 46) };
-	player execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
+	player execVM QPATHTOF(WBK_FlamethrowerSystem\runWithFlamethrower.sqf);
 	player addEventHandler ["Respawn", {
-		player execVM "\z\ace\addons\burnem\WBK_FlamethrowerSystem\runWithFlamethrower.sqf";
+		player execVM QPATHTOF(WBK_FlamethrowerSystem\runWithFlamethrower.sqf);
 	}];
 
 (findDisplay 46)
@@ -12,7 +13,17 @@ displayAddEventHandler ["MouseButtonDown", {
 _unit = missionNamespace getVariable["bis_fnc_moduleRemoteControl_unit", player];
 _weap = currentWeapon _unit;
 if !(isNil {_unit getVariable "WBK_FlameInUse"}) exitWith {};
-if ((_this select 1 == 0) and (getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != "") and (!dialog)) exitWith {
+if (
+	(_this select 1 == 0) and
+	(getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != "") and
+	(!dialog) and 
+	(!visibleMap) and
+	!(vehicle _unit != _unit) and
+	!(_unit getvariable ["ace_trenches_isplacing", false]) and
+	!(_unit getvariable ["grad_trenches_functions_diggingtrench", false]) and
+	!(_unit getvariable ["ace_trenches_dig", false]) and
+	!(_unit getvariable ["ace_advanced_throwing_inhand", false])
+	) exitWith {
 if ((_unit ammo primaryWeapon _unit) <= 0) exitWith {};
 _balloonsRequired = getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_RequiredBackpack"); 
 if ((_balloonsRequired != "") and (backpack _unit != _balloonsRequired)) exitWith {hintSilent format ["You require %1 backpack in order to use this flamethrower",getText (configFile >> "CfgVehicles" >> _balloonsRequired >> "displayName")];};

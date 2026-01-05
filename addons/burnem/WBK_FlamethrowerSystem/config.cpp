@@ -1,3 +1,5 @@
+#include "..\script_component.hpp"
+
 class CfgPatches 
 {
 	class WBK_PhoenixTreal_FlamethrowerMOD
@@ -20,236 +22,236 @@ class CfgSounds
 	class hit_by_flame_1
     {
     name = "hit_by_flame_1";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_1.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_1.wav), "db+9", 1};
     titles[]={};
 	};
 	class hit_by_flame_2
     {
     name = "hit_by_flame_2";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_2.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_2.wav), "db+9", 1};
     titles[]={};
 	};
 	class hit_by_flame_3
     {
     name = "hit_by_flame_3";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_3.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_3.wav), "db+9", 1};
     titles[]={};
 	};
 	class hit_by_flame_4
     {
     name = "hit_by_flame_4";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_4.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\hit_by_flame_4.wav), "db+9", 1};
     titles[]={};
 	};
 	class Bm_gas_leak
     {
     name = "Bm_gas_leak";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\gas_leak.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\gas_leak.ogg), "db+10", 1};
     titles[]={};
 	};
 	class Bm_fireFadeout
     {
     name = "Bm_fireFadeout";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\fire_ignite_2.wav", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\fire_ignite_2.ogg), "db+10", 1};
     titles[]={};
 	};
 	class molotov_break_sound
     {
     name = "molotov_break_sound";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\molotov_detonate_3.wav", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\molotov_detonate_3.wav), "db+10", 1};
     titles[]={};
 	};
 	class fuelTank_befexp
     {
     name = "fuelTank_befexp";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\fuelTank_befexp.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\fuelTank_befexp.ogg), "db+10", 1};
     titles[]={};
 	};
 	class fuelTank_befexp_1
     {
     name = "fuelTank_befexp_1";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\fuelTank_befexp_1.wav", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\fuelTank_befexp_1.wav), "db+10", 1};
     titles[]={};
 	};
 	class flamethrower_start
     {
     name = "flamethrower_start";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_start.wav", "db+3", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_start.ogg), "db+3", 1};
     titles[]={};
 	};
 	class flamethrower_end
     {
     name = "flamethrower_end";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_end.wav", "db+3", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_end.ogg), "db+3", 1};
     titles[]={};
 	};
 	class flamethrower_looping
     {
     name = "flamethrower_looping";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_looping.wav", "db+2.5", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_looping.ogg), "db+2.5", 1};
     titles[]={};
 	};
 	
 	class flamewerfer_start
     {
     name = "flamewerfer_start";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamewerfer_start.wav", "db+3", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamewerfer_start.wav), "db+3", 1};
     titles[]={};
 	};
 	class flamewerfer_end
     {
     name = "flamewerfer_end";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamewerfer_end.wav", "db+3", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamewerfer_end.wav), "db+3", 1};
     titles[]={};
 	};
 	class flamewerfer_looping
     {
     name = "flamewerfer_looping";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamewerfer_looping.wav", "db+2.5", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamewerfer_looping.wav), "db+2.5", 1};
     titles[]={};
 	};
 	class flamethrower_tank_bulletimpact_01
     {
     name = "flamethrower_tank_bulletimpact_01";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_01.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_01.wav), "db+9", 1};
     titles[]={};
 	};
 	class flamethrower_tank_bulletimpact_02
     {
     name = "flamethrower_tank_bulletimpact_02";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_02.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_02.wav), "db+9", 1};
     titles[]={};
 	};
 	class flamethrower_tank_bulletimpact_03
     {
     name = "flamethrower_tank_bulletimpact_03";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_03.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_03.wav), "db+9", 1};
     titles[]={};
 	};
 	class flamethrower_tank_bulletimpact_04
     {
     name = "flamethrower_tank_bulletimpact_04";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_04.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_04.wav), "db+9", 1};
     titles[]={};
 	};
 	class flamethrower_tank_bulletimpact_05
     {
     name = "flamethrower_tank_bulletimpact_05";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_05.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_05.wav), "db+9", 1};
     titles[]={};
 	};
 	class run_flame_1
     {
     name = "run_flame_1";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_1.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_1.wav), "db+9", 1};
     titles[]={};
 	};
 	class run_flame_2
     {
     name = "run_flame_2";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_2.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_2.wav), "db+9", 1};
     titles[]={};
 	};
 	class run_flame_3
     {
     name = "run_flame_3";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_3.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_3.wav), "db+9", 1};
     titles[]={};
 	};
 	class run_flame_4
     {
     name = "run_flame_4";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_4.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_4.wav), "db+9", 1};
     titles[]={};
 	};
 	class run_flame_5
     {
     name = "run_flame_5";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_5.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_5.wav), "db+9", 1};
     titles[]={};
 	};
 	class run_flame_6
     {
     name = "run_flame_6";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_6.wav", "db+9", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\run_flame_6.wav), "db+9", 1};
     titles[]={};
 	};
 	class igned_idle
     {
     name = "igned_idle";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\igned_idle.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\igned_idle.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath_distant1
     {
     name = "burnttodeath_distant1";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant1.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant1.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath_distant2
     {
     name = "burnttodeath_distant2";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant2.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant2.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath_distant3
     {
     name = "burnttodeath_distant3";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant3.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant3.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath_distant4
     {
     name = "burnttodeath_distant4";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant4.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant4.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath_distant5
     {
     name = "burnttodeath_distant5";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant5.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant5.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath_distant6
     {
     name = "burnttodeath_distant6";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant6.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath_distant6.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath1
     {
     name = "burnttodeath1";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath1.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath1.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath2
     {
     name = "burnttodeath2";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath2.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath2.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath3
     {
     name = "burnttodeath3";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath3.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath3.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath4
     {
     name = "burnttodeath4";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath4.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath4.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath5
     {
     name = "burnttodeath5";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath5.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath5.ogg), "db+10", 1};
     titles[]={};
 	};
 	class burnttodeath6
     {
     name = "burnttodeath6";
-    sound[] = {"\z\ace\addons\burnem\WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath6.ogg", "db+10", 1};
+    sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\burnttodeath6.ogg), "db+10", 1};
     titles[]={};
 	};
     class droiddeath1
@@ -275,6 +277,60 @@ class CfgSounds
     name = "droiddeath4";
     sound[] = {"MRC\JLTS\Core_mod_droids\sounds\death\droid\emp_4.wss", "db+10", 1};
     titles[]={};
+	};
+    class body_igned_idle
+	{
+		name = "body_igned_idle";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\body_burn_loop.ogg),3.1622777,1};
+		titles[] = {};
+	};
+    class Bm_body_fireFadeout
+	{
+		name = "Bm_fireFadeout";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\body_burn_stop.ogg),3.1622777,1};
+		titles[] = {};
+	};
+    class underbarrelflame_start
+	{
+		name = "underbarrelflame_start";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\underbarrelflame_start.ogg),2.5118864,1};
+		titles[] = {};
+	};
+	class underbarrelflame_stop
+	{
+		name = "underbarrelflame_stop";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\underbarrelflame_stop.ogg),2.5118864,1};
+		titles[] = {};
+	};
+	class underbarrelflame_loop
+	{
+		name = "underbarrelflame_loop";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\underbarrelflame_loop.ogg),2.818383,1};
+		titles[] = {};
+	};
+    class bm_embers
+	{
+		name = "bm_embers";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\embers.ogg),3.1622777,1};
+		titles[] = {};
+	};
+    class bm_treeOnFire_1
+	{
+		name = "bm_treeOnFire_1";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\tree_setOnFire_1.ogg),3.1622777,1};
+		titles[] = {};
+	};
+	class bm_treeOnFire_2
+	{
+		name = "bm_treeOnFire_2";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\tree_setOnFire_2.ogg),3.1622777,1};
+		titles[] = {};
+	};
+	class bm_treeOnFire_3
+	{
+		name = "bm_treeOnFire_3";
+		sound[] = {QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\tree_setOnFire_3.ogg),3.1622777,1};
+		titles[] = {};
 	};
 };
 
