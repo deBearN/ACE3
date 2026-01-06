@@ -1,5 +1,6 @@
 #include "..\..\script_component.hpp"
 if (!(hasInterface) or (isDedicated)) exitWith {};
+Aux212Debug_Flamer = false;
 [] spawn
 {
 	waitUntil {!(isNull findDisplay 46) };
@@ -12,6 +13,8 @@ if (!(hasInterface) or (isDedicated)) exitWith {};
 displayAddEventHandler ["MouseButtonDown", {
 _unit = missionNamespace getVariable["bis_fnc_moduleRemoteControl_unit", player];
 _weap = currentWeapon _unit;
+#define FLMDBG format ["_this:%1 \n isFlamer?:%2 \n dialog:%3 \n map:%4 \n inVehicle:%5 \n ace_trench_place:%6 \n grad_trench_dig:%7 \n ace_throw:%8", (_this select 1 == 0),(getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != ""),(!dialog), (!visibleMap),!(vehicle _unit != _unit),!(_unit getvariable "ace_trenches_isplacing"),!(_unit getvariable "grad_trenches_functions_diggingtrench"),!(_unit getvariable "ace_advanced_throwing_inhand")];
+if(Aux212Debug_Flamer)then {hint FLMDBG};
 if !(isNil {_unit getVariable "WBK_FlameInUse"}) exitWith {};
 if (
 	(_this select 1 == 0) and
@@ -21,7 +24,6 @@ if (
 	!(vehicle _unit != _unit) and
 	!(_unit getvariable ["ace_trenches_isplacing", false]) and
 	!(_unit getvariable ["grad_trenches_functions_diggingtrench", false]) and
-	!(_unit getvariable ["ace_trenches_dig", false]) and
 	!(_unit getvariable ["ace_advanced_throwing_inhand", false])
 	) exitWith {
 if ((_unit ammo primaryWeapon _unit) <= 0) exitWith {};
@@ -106,7 +108,7 @@ deleteVehicle _blow_obj;
 sleep 1.6;
 deleteVehicle _end;
 }] remoteExec ["spawn", [0,-2] select isDedicated,false];
-};
+};if((getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != "") and (_this select 1 == 0))then {diag_log FLMDBG};
 }];
 
 
