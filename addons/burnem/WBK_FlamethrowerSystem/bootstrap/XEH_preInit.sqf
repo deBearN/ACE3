@@ -52,6 +52,19 @@
     }
 ] call CBA_fnc_addSetting;
 
+[ 
+    "Aux212_BurnEm_VanillaDeath", 
+    "CHECKBOX", 
+    ["Enable Burning Death","Vanilla burning causes Burn'em Death effects"],
+    ["Burn Em","1) Main settings"],
+    false,
+    1,
+    {   
+        params ["_value"]; 
+        Aux212_BurnEm_VanillaDeath = _value; 
+    }
+] call CBA_fnc_addSetting;
+
 WBK_Flamethrower_Array = [];
 
 
@@ -990,7 +1003,7 @@ Flame_Death_container = {
 
 Flame_Death_container_ArmaOne = { 
 	params ["_obj"];
-	if ((isBurning _obj) and (getText (configfile >> 'CfgVehicles' >> typeOf _obj >> 'moves') == 'CfgMovesMaleSdr')) then {
+	if ((isBurning _obj) and (getText (configfile >> 'CfgVehicles' >> typeOf _obj >> 'moves') == 'CfgMovesMaleSdr') and Aux212_BurnEm_VanillaDeath) then {
 		[_obj,_obj] spawn Flame_Death_container;
 	};
 };
