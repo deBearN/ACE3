@@ -65,6 +65,19 @@
     }
 ] call CBA_fnc_addSetting;
 
+[ 
+    "Aux212_BurnEm_Debug", 
+    "CHECKBOX", 
+    ["Enable Debug logging","messages will appear on .rpt saying what happened"],
+    ["Burn Em","1) Main settings"],
+    false,
+    1,
+    {   
+			params ["_value"]; 
+			Aux212_BurnEm_Debug = _value;
+    }
+] call CBA_fnc_addSetting;
+
 WBK_Flamethrower_Array = [];
 
 
@@ -96,6 +109,11 @@ WBK_BurnEm_CreateSound = {
 Flame_Death_Particles = {
 	if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
 	params ["_object","_killer"];
+	if (Aux212_BurnEm_Debug) then {
+		#include "\z\ACE\addons\burnem\script_component.hpp"
+		_D1 = [_object, typeof _object]; _D2 = [_killer, typeof _killer, name _killer];
+		TRACE_2("[Aux212BurnEm]Flame_Death_Particles", _D1, _D2);
+	};
 	_isBurning = _object getVariable ["Aux212_IsBurning", false];
 	if !(_isBurning) exitWith {
 		_object setVariable ["Aux212_IsBurning",true,true];
@@ -746,7 +764,12 @@ Flame_Death_ReplaceTree_SOG = {
 
 Flame_Death_containerSpecialEH = {
 	params ["_obj","_killer"];
-	if (!(alive _obj) or !(local _obj)) exitWith {};
+	if (!(alive _obj) or !(local _obj) or isNil "_killer" or isNull _killer or str _killer isEqualTo "<NULL-object>") exitWith {};
+	if (Aux212_BurnEm_Debug) then {
+		#include "\z\ACE\addons\burnem\script_component.hpp"
+		_D1 = [_obj, typeof _obj]; _D2 = [_killer, typeof _killer, name _killer];
+		TRACE_2("[Aux212BurnEm]Flame_Death_containerSpecialEH", _D1, _D2);
+	};
 	if (getText (configfile >> 'CfgVehicles' >> typeOf _obj >> 'moves') != 'CfgMovesMaleSdr') exitWith {
 	switch true do {
 		case (typeOf _obj isKindOf "dev_flood_sangheili_o" || typeOf _obj isKindOf "dev_flood_carrier_o"|| typeOf _obj isKindOf "dev_flood_infection_o"): {
@@ -936,25 +959,25 @@ Flame_Death_containerSpecialEH = {
 };
 
 Aux212_isDroid = {
-    params ["_obj"];
-    _uniform = tolower uniform _obj; 
-    if (_obj isKindOf "ls_droid_base" || _obj isKindOf "Aux501_Units_CIS_B1_Base_Unit" || _obj isKindOf "3AS_LPB1_BSC_V3_F") exitWith
-    {
-        _obj setVariable ["aux212IsDroid", true, true];
+	params ["_obj"];
+	_uniform = tolower uniform _obj; 
+	if (_obj isKindOf "ls_droid_base" || _obj isKindOf "Aux501_Units_CIS_B1_Base_Unit" || _obj isKindOf "3AS_LPB1_BSC_V3_F") exitWith
+	{
+			_obj setVariable ["aux212IsDroid", true, true];
+	true;
+	}; 
+	if (_uniform find "droid" > -1 || _uniform find "b1" > -1 || _uniform find "b2" > -1 || _uniform find "bx" > -1 || (_uniform find "ts" > -1 && _uniform find "cis" > -1)) exitwith
+	{
+			_obj setVariable ["aux212IsDroid", true, true];
+	true;
+	};
+	{ 
+			_classname = tolower configName _x;
+			if (_classname find "droid" > -1 || _classname find "b1" > -1 || _classname find "b2" > -1 || _classname find "bx" > -1  || (_classname find "_ts_" > -1 && _classname find "cis" > -1)) exitwith {  
+					_obj setVariable ["aux212IsDroid", true, true];
 		true;
-    }; 
-    if (_uniform find "droid" > -1 || _uniform find "b1" > -1 || _uniform find "b2" > -1 || _uniform find "bx" > -1 || (_uniform find "ts" > -1 && _uniform find "cis" > -1)) exitwith
-    {
-        _obj setVariable ["aux212IsDroid", true, true];
-		true;
-    };
-    { 
-        _classname = tolower configName _x;
-        if (_classname find "droid" > -1 || _classname find "b1" > -1 || _classname find "b2" > -1 || _classname find "bx" > -1  || (_classname find "_ts_" > -1 && _classname find "cis" > -1)) exitwith {  
-            _obj setVariable ["aux212IsDroid", true, true];
-			true;
-        };
-    } forEach ("true" configClasses (configFile >> "CfgVehicles" >> (typeOf _obj) )); 
+			};
+	} forEach ("true" configClasses (configFile >> "CfgVehicles" >> (typeOf _obj) )); 
 		true;  
 };
 
@@ -962,6 +985,12 @@ Aux212_isDroid = {
 
 Flame_Death_container = { 
 	params ["_obj","_killer"];
+	if (!(alive _obj) or !(local _obj) or isNil "_killer" or isNull _killer or str _killer isEqualTo "<NULL-object>") exitWith {};
+		if (Aux212_BurnEm_Debug) then {
+			#include "\z\ACE\addons\burnem\script_component.hpp"
+			_D1 = [_obj, typeof _obj]; _D2 = [_killer, typeof _killer, name _killer];
+			TRACE_2("[Aux212BurnEm]Flame_Death_container", _D1, _D2);
+		};
     _obj call Aux212_isDroid;
 		waituntil Aux212_isDroid;
     _isDroid = _obj getVariable ["aux212IsDroid", false];
@@ -1003,6 +1032,11 @@ Flame_Death_container = {
 
 Flame_Death_container_ArmaOne = { 
 	params ["_obj"];
+	if (Aux212_BurnEm_Debug) then {
+		#include "\z\ACE\addons\burnem\script_component.hpp"
+		_D1 = [_obj, typeof _obj]; _D2 = [format ["IsActive: %1", Aux212_BurnEm_VanillaDeath]];
+		TRACE_2("[Aux212BurnEm]Flame_Death_container_ArmaOne", _D1, _D2);
+	};
 	if ((isBurning _obj) and (getText (configfile >> 'CfgVehicles' >> typeOf _obj >> 'moves') == 'CfgMovesMaleSdr') and Aux212_BurnEm_VanillaDeath) then {
 		[_obj,_obj] spawn Flame_Death_container;
 	};
@@ -1013,6 +1047,10 @@ Flamethrower_Fired_EH = {
 	_unit = _this select 0;
 	if !(local _unit) exitWith {};
 	_weap = _this select 1;
+	// if (!(getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != "")) exitwith {};
+	// #include "\z\ACE\addons\burnem\script_component.hpp"
+	// _DWeap = [_weap]; _DUnit = [_unit, typeof _unit, name _unit]; _DThis = [_this];
+	// TRACE_3("[Aux212BurnEm]Flamethrower_Fired_EH", _DWeap, _DUnit, _DThis);
 	switch true do {
 		case (_weap == "Throw"): {
 			_magazine = _this select 6;
@@ -1302,6 +1340,12 @@ Flame_Hit_container = {
 	_obj = _this select 0; 
 	_shooter = _this select 1;
 	if (_obj == _shooter) exitWith {};
+	if (!(alive _obj) or !(local _obj) or isNil "_killer" or isNull _shooter or str _shooter isEqualTo "<NULL-object>") exitWith {};
+	if (Aux212_BurnEm_Debug) then {
+		#include "\z\ACE\addons\burnem\script_component.hpp"
+		_D1 = [_obj, typeof _obj]; _D2 = [_shooter, typeof _shooter, name _shooter];
+		TRACE_2("[Aux212BurnEm]Flame_Hit_container", _D1, _D2);
+	};
 	if (!(animationState _obj == "flamethrower_tankExplodePre_1") and !(animationState _obj == "flamethrower_tankExplodePre_2") and ((((_obj worldToModel (_shooter modelToWorld [0, 0, 0])) select 1) < 0) or (stance _obj == "PRONE")) and (getText (configFile >> "CfgVehicles" >> backpack _obj >> "WBK_BurnEm_FlamethrowerBaloons") != "")) then {
 		[_obj,selectRandom [QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_01.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_02.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_03.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_04.wav),QPATHTOF(WBK_FlamethrowerSystem\flameThrowerSounds\flamethrower_tank_bulletimpact_05.wav)],80] call WBK_BurnEm_CreateSound;
 		_currentMag = currentMagazine _shooter;
