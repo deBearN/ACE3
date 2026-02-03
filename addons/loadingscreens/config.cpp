@@ -207,7 +207,7 @@ class RscDisplayMain: RscStandardDisplay
 			text="Join FTX Server";
 			tooltip="Server for all field training exercises";
 			style=2;
-			onbuttonclick="connectToServer ['15.235.13.223', 2602, '212']";
+			onbuttonclick="connectToServer ['51.161.118.10', 2602, '212']";
 			colorBackground[]={0,0,0,0.7};
 			colorBackgroundActive[]={1,0,0,0,2};
 			borderSize=0.055;
