@@ -105,7 +105,25 @@ WBK_BurnEm_CreateSound = {
 	}] remoteExec ["call",0];
 };
 
-
+Smoke_Damage_Particle = {
+	if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
+	params ["_object"];
+	_isSmoking = _object getVariable ["Aux212_IsSmoking", false];
+	if !(_isSmoking)then
+	{
+		_object setVariable ["Aux212_IsSmoking",true,true];
+		_particleSmoke1 = "#particlesource" createVehicleLocal position _object;  
+		_particleSmoke1 setParticleClass "SmallDestructionSmoke";  
+		_particleSmoke1 attachto [_object,[0,-0,-0.3],"Spine3"];		
+		_particleSmoke2 = "#particlesource" createVehicleLocal position _object;  
+		_particleSmoke2 setParticleClass "SmallDestructionSmoke";  
+		_particleSmoke2 attachto [_object,[-0,-0,-0.3],"Spine3"];	
+		sleep 6.4;  
+		_object setVariable ["Aux212_IsSmoking",false,true];
+		deleteVehicle _particleSmoke1; 
+		deleteVehicle _particleSmoke2; 
+	};
+};
 Flame_Death_Particles = {
 	if ((isDedicated) or !(isNil "WBK_Flame_DisableParticles")) exitWith {};
 	params ["_object","_killer"];
@@ -867,22 +885,54 @@ Flame_Death_containerSpecialEH = {
 	};
 	};
 	switch true do {
-		case (typeof _obj isKindOf "WBK_B2_Mod_Standart" || typeof _obj isKindOf "WBK_B1_standart" || typeof _obj isKindOf "WBK_B1_heavy" || typeof _obj isKindOf "WBK_B1_SquadLead" || typeof _obj isKindOf "WBK_B1_Shotgun"):
+		case (!isNil {_obj getVariable "Droid_Health"}):
 		{
 				if (_obj getVariable 'droid_health' <= 0) exitWith {
 				[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
 				_obj removeAllEventHandlers "HandleDamage";
 				_obj setDamage 1; 
 			};
-			_health = _obj getVariable "droid_health";
-			_health = _health - 2;
+			private _health = _obj getVariable "droid_health";
+			_health = _health - 6;
 			_obj setVariable ["droid_health",_health,true];
-		};
-		case (typeof _obj isKindOf "WBK_BX_Assasin_1"):
-		{
-			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
-			_obj removeAllEventHandlers "HandleDamage";
-			_obj setDamage 1; 
+			[_obj, _killer] remoteExec ["Smoke_Damage_Particle",[0,-2] select isDedicated,false];
+			if (!(stance _obj == "PRONE") && !(gestureState _obj == "B1_Droid_hit_1") && selectRandom [true,false]) exitWith {
+				switch true do {
+					case ((_obj getVariable "WBK_Droids_VoiceType" find "b1" > -1) && _obj getVariable ["Aux212_WBK_isHit", false]):{
+						[_obj,selectRandom ["WBK_Droids_Flinch_1","WBK_Droids_Flinch_2","WBK_Droids_Flinch_3","B1_Droid_hit_1","B1_Droid_hit_2"]] remoteExecCall ["playActionNow",_obj];
+						[_obj, _killer] remoteExec ["Smoke_Damage_Particle",[0,-2] select isDedicated,false];
+						_obj setVariable ["Aux212_WBK_isHit", true, true];
+						sleep 1;
+						_obj setVariable ["Aux212_WBK_isHit", false, true];
+					};
+					case ((_obj getVariable "WBK_Droids_VoiceType" find "b2" > -1) && _obj getVariable ["Aux212_WBK_isHit", false]):{
+						[_obj,selectRandom ["WBK_Droids_Flinch_1","WBK_Droids_Flinch_2","WBK_Droids_Flinch_3","B1_Droid_hit_1","B1_Droid_hit_2"]] remoteExecCall ["playActionNow",_obj];
+						[_obj, _killer] remoteExec ["Smoke_Damage_Particle",[0,-2] select isDedicated,false];
+						_obj setVariable ["Aux212_WBK_isHit", true, true];
+						sleep 1;
+						_obj setVariable ["Aux212_WBK_isHit", false, true];
+					};
+					case ((_obj getVariable "WBK_Droids_VoiceType" find "bx" > -1) && _obj getVariable ["Aux212_WBK_isHit", false]):{
+						[_obj,"Flame_Hit_1"] remoteExec ["playActionNow",_obj];
+						[_obj, _killer] remoteExec ["Smoke_Damage_Particle",[0,-2] select isDedicated,false];
+						_obj setVariable ["Aux212_WBK_isHit", true, true];
+						sleep 1;
+						_obj setVariable ["Aux212_WBK_isHit", false, true];
+					};
+					default {
+						[_obj,"Flame_Hit_1"] remoteExec ["playActionNow",_obj];
+						[_obj, _killer] remoteExec ["Smoke_Damage_Particle",[0,-2] select isDedicated,false];
+						_obj setVariable ["Aux212_WBK_isHit", true, true];
+						sleep 1;
+						_obj setVariable ["Aux212_WBK_isHit", false, true];
+					};
+				};
+			};
+			if (!(stance _obj == "PRONE") && !(gestureState _obj == "B1_Droid_hit_1") && selectRandom [true,false]) exitWith {
+				[_obj,[selectRandom ["WBK_Droids_Flinch_1","WBK_Droids_Flinch_2","WBK_Droids_Flinch_3","B1_Droid_hit_1","B1_Droid_hit_2"], 0, 0.2, false]] remoteExec ["switchMove",0];
+				[_obj, "WBK_Droid_Disable_Gesture"] remoteExecCall ["playActionNow",_obj];
+				[_obj,((_obj getVariable "WBK_Droids_VoiceType") + (selectRandom ["act_hit_1.ogg","act_hit_2.ogg","act_hit_3.ogg","act_hit_4.ogg","act_hit_5.ogg"])),70] remoteExecCall ["WBK_Droid_VoiceLines",[0,-2] select isDedicated];
+			};
 		};
 		case (((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find 'Void-Helm') > -1) and !((getText (configfile >> 'CfgWeapons' >> headgear _obj >> 'displayName') find '(OPEN)') > -1)): {
 			[_obj,_killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
