@@ -232,7 +232,7 @@ Flame_Death_Particles = {
 		_gar setPosATL [getPosATL _object select 0,getPosATL _object select 1,0]; 
 		_grassCutter = "Land_ClutterCutter_medium_F" createVehicleLocal getPosATL _object;
 		_grassCutter setPosATL [getPosATL _object select 0,getPosATL _object select 1,0]; 
-		uiSleep 17;
+		if (isPlayer _object) then {uiSleep 6;}else{uiSleep 17;};
 		_object setVariable ["Aux212_IsBurning",false,true];
 		_gar say3D ["Bm_body_fireFadeout",70];
 		deleteVehicle _smlfirelight;
@@ -1092,6 +1092,12 @@ Flame_Death_container_ArmaOne = {
 	};
 };
 
+Player_Hit_Container = {
+	params ["_unit","_killer"];
+	["ace_fire_burn", [_unit, 10]] call CBA_fnc_globalEvent;
+	[_unit, _killer] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];
+};
+
 
 Flamethrower_Fired_EH = {
 	_unit = _this select 0;
@@ -1116,9 +1122,14 @@ Flamethrower_Fired_EH = {
 			if ((_balloonsRequired != "") and (backpack _unit != _balloonsRequired)) exitWith {};
 			_value = getNumber (_unit call WBK_GetCurrentMuzzle >> "WBK_BurnEm_FlamethrowerDistance");
 			_realVal = _value + 2;
-			_bow_cursor_end = ((eyePos _unit) vectorAdd (_unit weaponDirection currentWeapon _unit vectorMultiply _realVal));
+			_unit = player;
+			_relativePos = [-0.028,0.45,-0.17];
+			_memModelPos = _unit selectionPosition "lefthand";
+			_finalModelPos = _memModelPos vectorAdd _relativePos;
+			_MuzzlePos = ATLToASL (_unit modelToWorldVisual _finalModelPos);
+			_bow_cursor_end = (_MuzzlePos vectorAdd (_unit weaponDirection currentWeapon _unit vectorMultiply _realVal));
 			_ins = lineIntersectsSurfaces [ 
-			  eyePos _unit, 
+			  _MuzzlePos, 
 			  _bow_cursor_end, 
 			  _unit, 
 			  objNull, 
@@ -1175,7 +1186,8 @@ Flamethrower_Fired_EH = {
 			};
 			if !(isNil "_firstObj") then {
 				switch true do {
-					case ((_firstObj isKindOf "MAN") and (alive _firstObj)): {[_firstObj,_unit] remoteExec ["Flame_Death_containerSpecialEH",_firstObj];};
+					case ((_firstObj isKindOf "MAN") and (alive _firstObj) and (isPlayer _firstObj)): {[_firstObj,_unit] remoteExec ["Player_Hit_Container",_firstObj];};
+					case ((_firstObj isKindOf "MAN") and (alive _firstObj) and !(isPlayer _firstObj)): {[_firstObj,_unit] remoteExec ["Flame_Death_containerSpecialEH",_firstObj];};
 					case (_firstObj isKindOf "CAR"): {[_firstObj,((damage _firstObj) + 0.01)] remoteExec ["setDamage",_firstObj];[_firstObj,_unit] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
 					case (_firstObj isKindOf "StaticWeapon"): {[_firstObj,((damage _firstObj) + 0.01)] remoteExec ["setDamage",_firstObj];[_firstObj, _unit] remoteExec ["Flame_Death_Particles",[0,-2] select isDedicated,false];};
 				};
