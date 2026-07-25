@@ -1,61 +1,57 @@
 #include "..\script_component.hpp"
-_unit = _this;
-nextOilSnd = "run_flame_1";
+params ["_unit"];
+
+private _nextOilSnd = "run_flame_1";
+private _flameStates = [
+    "AmovPercMevaSrasWrflDf",
+    "AmovPercMevaSrasWrflDfl",
+    "AmovPercMevaSrasWrflDfr",
+    "AmovPercMevaSrasWpstDf",
+    "AmovPercMevaSrasWpstDfl",
+    "AmovPercMevaSrasWpstDfr",
+    "AmovPercMevaSlowWpstDf",
+    "AmovPercMevaSlowWpstDfl",
+    "AmovPercMevaSlowWpstDfr",
+    "AmovPercMevaSlowWrflDf",
+    "AmovPercMevaSlowWrflDfl",
+    "AmovPercMevaSlowWrflDfr",
+    "AmovPknlMevaSrasWrflDf",
+    "AmovPknlMevaSrasWrflDfl",
+    "AmovPknlMevaSrasWrflDfr",
+    "AmovPknlMevaSrasWpstDf",
+    "AmovPknlMevaSrasWpstDfl",
+    "AmovPknlMevaSrasWpstDfr",
+    "AmovPercMevaSnonWnonDf",
+    "AmovPercMevaSnonWnonDfl",
+    "AmovPercMevaSnonWnonDfr"
+];
+private _randomFlameSounds = ["run_flame_6", "run_flame_1", "run_flame_2", "run_flame_5", "run_flame_4"];
+
 while {alive _unit} do {
-_animState = animationState _unit;
-if ((getText (configFile >> "CfgVehicles" >> backpack _unit >> "WBK_BurnEm_FlamethrowerBaloons") != "") and ((_unit ammo primaryWeapon _unit) != 0)) then { 
-if (
-(_animState == "AmovPercMevaSrasWrflDf") or
-(_animState == "AmovPercMevaSrasWrflDfl") or
-(_animState == "AmovPercMevaSrasWrflDfr") or
-(_animState == "AmovPercMevaSrasWpstDf") or
-(_animState == "AmovPercMevaSrasWpstDfl") or
-(_animState == "AmovPercMevaSrasWpstDfr") or
-(_animState == "AmovPercMevaSlowWpstDf") or
-(_animState == "AmovPercMevaSlowWpstDfl") or
-(_animState == "AmovPercMevaSlowWpstDfr") or
-(_animState == "AmovPercMevaSlowWrflDf") or
-(_animState == "AmovPercMevaSlowWrflDfl") or
-(_animState == "AmovPercMevaSlowWrflDfr") or 
-(_animState == "AmovPknlMevaSrasWrflDf") or 
-(_animState == "AmovPknlMevaSrasWrflDfl") or 
-(_animState == "AmovPknlMevaSrasWrflDfr") or 
-(_animState == "AmovPknlMevaSrasWpstDf") or 
-(_animState == "AmovPknlMevaSrasWpstDfl") or 
-(_animState == "AmovPknlMevaSrasWpstDfr") or 
-(_animState == "AmovPercMevaSnonWnonDf") or 
-(_animState == "AmovPercMevaSnonWnonDfl") or 
-(_animState == "AmovPercMevaSnonWnonDfr")
-) then {
+    private _animState = animationState _unit;
 
-if (nextOilSnd == "run_flame_1") then {
-nextOilSnd = "run_flame_2";
-}else{
-if (nextOilSnd == "run_flame_2") then {
-nextOilSnd = "run_flame_3";
-}else{
-if (nextOilSnd == "run_flame_3") then {
-nextOilSnd = "run_flame_4";
-}else{
-if (nextOilSnd == "run_flame_4") then {
-nextOilSnd = "run_flame_5";
-}else{
-if (nextOilSnd == "run_flame_5") then {
-_rndOIL = ["run_flame_6","run_flame_1","run_flame_2","run_flame_5","run_flame_4"] call BIS_fnc_SelectRandom;
-nextOilSnd = _rndOIL;
-}else{
-if (nextOilSnd == "run_flame_6") then {
-nextOilSnd = "run_flame_1";
-};
-};
-};
-};
-};
-};
-[_unit, nextOilSnd, 25, 3] execVM QPATHTOF(WBK_FlamethrowerSystem\createSoundGlobal.sqf);
-}; 
-sleep 0.31;
+    if (
+        (getText (configFile >> "CfgVehicles" >> backpack _unit >> "WBK_BurnEm_FlamethrowerBaloons") != "") &&
+        ((_unit ammo primaryWeapon _unit) != 0)
+    ) then {
+        switch true do {
+            case (_animState in _flameStates): {
+                switch _nextOilSnd do {
+                    case "run_flame_1": { _nextOilSnd = "run_flame_2"; };
+                    case "run_flame_2": { _nextOilSnd = "run_flame_3"; };
+                    case "run_flame_3": { _nextOilSnd = "run_flame_4"; };
+                    case "run_flame_4": { _nextOilSnd = "run_flame_5"; };
+                    case "run_flame_5": { _nextOilSnd = _randomFlameSounds call BIS_fnc_SelectRandom; };
+                    case "run_flame_6": { _nextOilSnd = "run_flame_1"; };
+                    default { _nextOilSnd = "run_flame_1"; };
+                };
 
-
-          };
-      };
+                [_unit, _nextOilSnd, 25, 3] execVM QPATHTOF(WBK_FlamethrowerSystem\createSoundGlobal.sqf);
+            };
+            default {
+                // no flame sound for other animation states
+            };
+        };
+    };
+    sleep 0.31;
+};
