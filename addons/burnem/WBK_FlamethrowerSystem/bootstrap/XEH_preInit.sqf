@@ -27,6 +27,19 @@
 ] call CBA_fnc_addSetting;
 
 [ 
+    "Aux212_BurnEm_Local", 
+    "CHECKBOX", 
+    ["Make fire effect Local?","Might fix lag"],
+    ["Burn Em","1) Main settings"],
+    true,
+    1,
+    {   
+        params ["_value"]; 
+        Aux212_BurnEm_Local_var = _value; 
+    }
+] call CBA_fnc_addSetting;
+
+[ 
     "WBK_BurnEm_Trees", 
     "CHECKBOX", 
     ["Enable ability to burn trees? (Require CDLC)","Flamethrowers and Molotovs will set trees on fire if tree is damaged enough."],
