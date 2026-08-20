@@ -12,6 +12,7 @@ if (!(hasInterface) or (isDedicated)) exitWith {};
 displayAddEventHandler ["MouseButtonDown", {
 	_unit = missionNamespace getVariable["bis_fnc_moduleRemoteControl_unit", player];
 	_weap = currentWeapon _unit;
+	if !(getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != "") exitwith {};
 	if !(isNil {_unit getVariable "WBK_FlameInUse"}) exitWith {};
 	#define FLMDBG format ["_this:%1 \n isFlamer?:%2 \n dialog:%3 \n map:%4 \n inVehicle:%5 \n ace_trench_place:%6 \n grad_trench_dig:%7 \n ace_throw:%8", (_this select 1 == 0),(getText (configFile >> "CfgWeapons" >> _weap >> "WBK_BurnEm_IsFlamethrower") != ""),(!dialog), (!visibleMap),!(vehicle _unit != _unit),!(_unit getvariable "ace_trenches_isplacing"),!(_unit getvariable "grad_trenches_functions_diggingtrench"),!(_unit getvariable "ace_advanced_throwing_inhand")];
 	if(Aux212_BurnEm_Debug)then {diag_log FLMDBG};
